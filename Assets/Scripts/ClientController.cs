@@ -41,6 +41,14 @@ public class ClientController : MonoBehaviour
 
     public void bindSocket() {
         // check that a socket has been created but hasn't been bound
+        if(this.activeSocketState != state.Created) {
+            if(this.activeSocketState == state.Bound) {
+                Debug.Log("CLIENT ERROR: already bound a port on the module");
+                return;
+            }
+            Debug.Log("CLIENT ERROR: must create a socket before binding it");
+            return;
+        }
 
         // ask user to select a port to bind to
 
@@ -59,7 +67,10 @@ public class ClientController : MonoBehaviour
     public void closeSocket()
     {   
         // check that there's a socket to close
-        
+        if(this.activeSocketState == state.Closed) {
+            Debug.Log("CLIENT ERROR: called close without any sockets opened");
+            return;
+        }
 
         // update appropriate status variables
         this.activeSocketState = state.Closed;
