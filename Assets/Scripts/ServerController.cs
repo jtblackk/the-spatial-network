@@ -5,16 +5,16 @@ using UnityEngine;
 
 public class ServerController : MonoBehaviour
 {   
+    public enum socketType {None, TCP, UDP};
+    public socketType activeSocketType;
 
     public enum port {None, One, Two, Three, Four};
     public port activePort;
   
     public GameObject activeSocketObject;
 
-    public enum socketType {None, TCP, UDP};
-    public socketType activeSocketType;
   
-    public enum state {Default, Closed, Bound, Transmitting};
+    public enum state {Closed, Created, Bound, Transmitting};
     public state activeSocketState;
   
 

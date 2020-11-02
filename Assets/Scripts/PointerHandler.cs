@@ -52,6 +52,7 @@ public class PointerHandler : MonoBehaviour
                 if (Physics.Raycast (ray, out hit, 100.0f)) {
                     switch (hit.transform.name)
                     {
+                        //client cases
                         case "c_Create()":
                             this.clientArea.GetComponent<ClientController>().createSocket();
                             break;
@@ -118,6 +119,7 @@ public class PointerHandler : MonoBehaviour
                         case "c_period":
                             this.clientArea.GetComponent<ClientController>().numpad('.');
                             break;
+                            
                         // server cases
                         case "s_Create()":
                             this.serverArea.GetComponent<ServerController>().createSocket();
