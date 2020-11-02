@@ -10,6 +10,9 @@ public class PointerHandler : MonoBehaviour
 {
     public SteamVR_LaserPointer laserPointer;
 
+    public GameObject clientArea;
+    public GameObject serverArea;
+
     void Awake()
     {
         laserPointer.PointerIn += PointerInside;
@@ -50,137 +53,137 @@ public class PointerHandler : MonoBehaviour
                     switch (hit.transform.name)
                     {
                         case "c_Create()":
-                            this.client_create();
+                            this.clientArea.GetComponent<ClientController>().createSocket();
                             break;
                         case "c_Bind()":
-                            this.client_bind();
+                            this.clientArea.GetComponent<ClientController>().bindSocket();
                             break;
                         case "c_Close()":
-                            this.client_close();
+                            this.clientArea.GetComponent<ClientController>().closeSocket();
                             break;
                         case "c_Connect()":
-                            this.client_connect();
+                            this.clientArea.GetComponent<ClientController>().connectToServer();
                             break;
                         case "c_Send()":
-                            this.client_send();
+                            this.clientArea.GetComponent<ClientController>().sendData();
                             break;
                         case "c_Auto_Send()":
-                            this.client_auto_send();
+                            this.clientArea.GetComponent<ClientController>().toggleAutoSend();
                             break;
                         case "c_Listen()":
-                            this.client_listen();
+                            this.clientArea.GetComponent<ClientController>().listenForConnection();
                             break;
                         case "c_Accept()":
-                            this.client_accept();
+                            this.clientArea.GetComponent<ClientController>().acceptConnection();
                             break;
                         case "c_Receive()":
-                            this.client_receive();
+                            this.clientArea.GetComponent<ClientController>().receiveData();
                             break;
                         case "c_Auto_Receive()":
-                            this.client_auto_receive();
+                            this.clientArea.GetComponent<ClientController>().toggleAutoReceive();
                             break;
                         case "c_Reset()":
-                            this.client_reset();
+                            this.clientArea.GetComponent<ClientController>().resetModules();
                             break;
                         case "c_0":
-                            this.client_0();
+                            this.clientArea.GetComponent<ClientController>().numpad('0');
                             break;
                         case "c_1":
-                            this.client_1();
+                            this.clientArea.GetComponent<ClientController>().numpad('1');
                             break;
                         case "c_2":
-                            this.client_2();
+                            this.clientArea.GetComponent<ClientController>().numpad('2');
                             break;
                         case "c_3":
-                            this.client_3();
+                            this.clientArea.GetComponent<ClientController>().numpad('3');
                             break;
                         case "c_4":
-                            this.client_4();
+                            this.clientArea.GetComponent<ClientController>().numpad('4');
                             break;
                         case "c_5":
-                            this.client_5();
+                            this.clientArea.GetComponent<ClientController>().numpad('5');
                             break;
                         case "c_6":
-                            this.client_6();
+                            this.clientArea.GetComponent<ClientController>().numpad('6');
                             break;
                         case "c_7":
-                            this.client_7();
+                            this.clientArea.GetComponent<ClientController>().numpad('7');
                             break;
                         case "c_8":
-                            this.client_8();
+                            this.clientArea.GetComponent<ClientController>().numpad('8');
                             break;
                         case "c_9":
-                            this.client_9();
+                            this.clientArea.GetComponent<ClientController>().numpad('9');
                             break;
                         case "c_period":
-                            this.client_period();
+                            this.clientArea.GetComponent<ClientController>().numpad('.');
                             break;
                         // server cases
                         case "s_Create()":
-                            this.server_create();
+                            this.serverArea.GetComponent<ServerController>().createSocket();
                             break;
                         case "s_Bind()":
-                            this.server_bind();
+                            this.serverArea.GetComponent<ServerController>().bindSocket();
                             break;
                         case "s_Close()":
-                            this.server_close();
+                            this.serverArea.GetComponent<ServerController>().closeSocket();
                             break;
                         case "s_Connect()":
-                            this.server_connect();
+                            this.serverArea.GetComponent<ServerController>().connectToServer();
                             break;
                         case "s_Send()":
-                            this.server_send();
+                            this.serverArea.GetComponent<ServerController>().sendData();
                             break;
                         case "s_Auto_Send()":
-                            this.server_auto_send();
+                            this.serverArea.GetComponent<ServerController>().toggleAutoSend();
                             break;
                         case "s_Listen()":
-                            this.server_listen();
+                            this.serverArea.GetComponent<ServerController>().listenForConnection();
                             break;
                         case "s_Accept()":
-                            this.server_accept();
+                            this.serverArea.GetComponent<ServerController>().acceptConnection();
                             break;
                         case "s_Receive()":
-                            this.server_receive();
+                            this.serverArea.GetComponent<ServerController>().receiveData();
                             break;
                         case "s_Auto_Receive()":
-                            this.server_auto_receive();
+                            this.serverArea.GetComponent<ServerController>().toggleAutoReceive();
                             break;
                         case "s_Reset()":
-                            this.server_reset();
+                            this.serverArea.GetComponent<ServerController>().resetModules();
                             break;
                         case "s_0":
-                            this.server_0();
+                            this.serverArea.GetComponent<ServerController>().numpad('0');
                             break;
                         case "s_1":
-                            this.server_1();
+                            this.serverArea.GetComponent<ServerController>().numpad('1');
                             break;
                         case "s_2":
-                            this.server_2();
+                            this.serverArea.GetComponent<ServerController>().numpad('2');
                             break;
                         case "s_3":
-                            this.server_3();
+                            this.serverArea.GetComponent<ServerController>().numpad('3');
                             break;
                         case "s_4":
-                            this.server_4();
+                            this.serverArea.GetComponent<ServerController>().numpad('4');
                             break;
                         case "s_5":
-                            this.server_5();
+                            this.serverArea.GetComponent<ServerController>().numpad('5');
                             break;
                         case "s_6":
-                            this.server_6();
+                            this.serverArea.GetComponent<ServerController>().numpad('6');
                             break;
                         case "s_7":
-                            this.server_7();
+                            this.serverArea.GetComponent<ServerController>().numpad('7');
                             break;
                         case "s_8":
-                            this.server_8();
+                            this.serverArea.GetComponent<ServerController>().numpad('8');
                             break;
                         case "s_9":
-                            this.server_9();
+                            this.serverArea.GetComponent<ServerController>().numpad('9');
                             break;
                         case "s_period":
-                            this.server_period();
+                            this.serverArea.GetComponent<ServerController>().numpad('.');
                             break;
                         default:
                             break;
@@ -191,213 +194,4 @@ public class PointerHandler : MonoBehaviour
         }
     }
 
-    private void server_create()
-    {
-        Debug.Log("stub: server_create()");
-    }
-
-    private void server_bind()
-    {
-        Debug.Log("stub: server_bind()");
-    }
-
-    private void server_close()
-    {
-        Debug.Log("stub: server_close()");
-    }
-
-    private void server_connect()
-    {
-        Debug.Log("stub: server_connect()");
-    }
-
-    private void server_send()
-    {
-        Debug.Log("stub: server_send()");
-    }
-
-    private void server_auto_send()
-    {
-        Debug.Log("stub: server_auto_send()");
-    }
-
-    private void server_listen()
-    {
-        Debug.Log("stub: server_listen()");
-    }
-
-    private void server_accept()
-    {
-        Debug.Log("stub: server_accept()");
-    }
-
-    private void server_receive()
-    {
-        Debug.Log("stub: server_receive()");
-    }
-
-    private void server_auto_receive()
-    {
-        Debug.Log("stub: server_auto_receive()");    
-    }
-
-    private void server_reset()
-    {
-        Debug.Log("stub: server_reset()");
-    }
-
-    private void server_0()
-    {
-        Debug.Log("stub: server_0()");
-    }
-
-    private void server_1()
-    {
-        Debug.Log("stub: server_1()");
-    }
-
-    private void server_2()
-    {
-        Debug.Log("stub: server_2()");
-    }
-
-    private void server_3()
-    {
-        Debug.Log("stub: server_3()");
-    }
-
-    private void server_4()
-    {
-        Debug.Log("stub: server_4()");
-    }
-
-    private void server_5()
-    {
-        Debug.Log("stub: server_5()");
-    }
-
-    private void server_6()
-    {
-        Debug.Log("stub: server_6()");
-    }
-
-    private void server_7()
-    {
-        Debug.Log("stub: server_7()");
-    }
-
-    private void server_8()
-    {
-        Debug.Log("stub: server_8()");
-    }
-
-    private void server_9()
-    {
-        Debug.Log("stub: server_9()");
-    }
-
-    private void server_period()
-    {
-        Debug.Log("stub: server_period()");
-    }
-
-
-
-
-    private void client_create() {
-        Debug.Log("stub: client_create()");
-    }
-    private void client_bind() {
-        Debug.Log("stub: client_bind()");
-    }
-
-    private void client_close() {
-        Debug.Log("stub: client_create()");
-    }
-    private void client_connect() {
-        Debug.Log("stub: client_connect");
-    }
-
-    private void client_send() {
-        Debug.Log("stub: client_send");
-    }
-
-    private void client_auto_send() {
-        Debug.Log("stub: client_auto_send");
-    }
-
-    private void client_listen() {
-        Debug.Log("stub: client_listen");
-    }
-
-    private void client_accept() {
-        Debug.Log("stub: client_accept");
-    }
-
-    private void client_receive() {
-        Debug.Log("stub: client_receive");
-    }
-
-    private void client_auto_receive() {
-        Debug.Log("stub: client_auto_receive");
-    }
-
-    private void client_reset() {
-        Debug.Log("stub: client_reset");
-    }
-
-    private void client_0()
-    {
-        Debug.Log("stub: client_0()");
-    }
-
-    private void client_1()
-    {
-        Debug.Log("stub: client_1()");
-    }
-
-    private void client_2()
-    {
-        Debug.Log("stub: client_2()");
-    }
-
-    private void client_3()
-    {
-        Debug.Log("stub: client_3()");
-    }
-
-    private void client_4()
-    {
-        Debug.Log("stub: client_4()");
-    }
-
-    private void client_5()
-    {
-        Debug.Log("stub: client_5()");
-    }
-
-    private void client_6()
-    {
-        Debug.Log("stub: client_6()");
-    }
-
-    private void client_7()
-    {
-        Debug.Log("stub: client_7()");
-    }
-
-    private void client_8()
-    {
-        Debug.Log("stub: client_8()");
-    }
-
-    private void client_9()
-    {
-        Debug.Log("stub: client_9()");
-    }
-
-    private void client_period()
-    {
-        Debug.Log("stub: client_period()");
-    }
 }
