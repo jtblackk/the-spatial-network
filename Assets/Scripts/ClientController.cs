@@ -72,25 +72,38 @@ public class ClientController : MonoBehaviour
 
    }
 
-    public void bindSocket() {
+    public IEnumerator bindSocket() {
         // check that a socket has been created but hasn't been bound
         if(this.activeSocketState != state.Created) {
             if(this.activeSocketState == state.Bound) {
                 Debug.Log("CLIENT \"ERROR: already bound a port on the module\"");
-                return;
+                yield break;
             }
             Debug.Log("CLIENT \"ERROR: must create a socket before binding it\"");
-            return;
+            yield break;
         }
 
         // ask user to select a port to bind to
+        string numpadInput;
+        do {
+            Debug.Log("CLIENT: \"Enter a port to bind to (1-4)\"");
 
-        // get input from the client keypad
-            // if the user enters an invalid option, present error message and try again
+            // clear the numpad buffer
+            this.clearNumpadBuffer();
+
+            // wait for the numpad buffer to be ready to read
+            while(this.bufferReadyToRead != true) {
+                yield return null;
+            }
+
+            // record and clear the buffer contents
+            numpadInput = this.clearNumpadBuffer();
+
+        } while(Int32.Parse(numpadInput) < 1 || Int32.Parse(numpadInput) > 4);
 
         // bind the socket, update appropriate values
+        this.activePort = Int32.Parse(numpadInput);
         this.activeSocketState = state.Bound;
-        this.activePort = 3; // TODO / NOTE: just using 3 until keypad system is worked out
 
         // present bind feedback
         // make socket tube protrude
