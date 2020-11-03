@@ -14,16 +14,57 @@ public class ServerController : MonoBehaviour
     public enum state {Closed, Created, Bound, Transmitting};
     public state activeSocketState;
 
-
+    public string numpadBuffer;
+    public bool bufferReadyToRead;
 
     // shared functions
-   public void createSocket() {
-       Debug.Log("SERVER: createSocket stub");
+
+    private string clearNumpadBuffer() {
+        string contents = this.numpadBuffer;
+        this.numpadBuffer = "";
+        this.bufferReadyToRead = false;
+
+        return contents;
+    }
+
+   public IEnumerator createSocket() {
        // if there's already an active socket, send an error message
-       if(activeSocketObject != null) {
-           Debug.Log("SERVER ERROR: A server socket is already in use. No need to create another socket.");
-           return;
+       if(this.activeSocketObject != null || this.activeSocketState != state.Closed) {
+           Debug.Log("SERVER: \"ERROR: A socket is already in use. No need to create another one on this module.\"");
+           yield break;
        }
+       
+        
+        // ask user which type of socket to create (TCP or UDP)
+        string numpadInput;
+        do {
+            Debug.Log("SERVER: \"Choose a socket type: (1) UDP (2) TCP\"");
+
+            // clear the numpad buffer
+            this.clearNumpadBuffer();
+
+            // wait for the numpad buffer to be ready to read
+            while(this.bufferReadyToRead != true) {
+                yield return null;
+            }
+
+            // record and clear the buffer inputs
+            numpadInput = this.clearNumpadBuffer();
+
+        } while(numpadInput != "1" && numpadInput != "2");
+
+
+        // create the socket, update appropriate variables
+        if (numpadInput == "1") {
+            this.activeSocketType = socketType.UDP;
+        }        
+        else {
+            this.activeSocketType = socketType.TCP;
+        }
+        this.activeSocketState = state.Created;
+        
+        // present creation feedback
+        Debug.Log("SERVER: \"createSocket() created a new " + this.activeSocketType + " socket\"");
    }
 
     public void bindSocket() {
@@ -36,7 +77,23 @@ public class ServerController : MonoBehaviour
     }
 
     public void numpad(char key) {
-        Debug.Log("SERVER: numpad stub -> " + key);
+        // pressed enter key--mark buffer as ready to read from
+        if(key == 'e') {
+            this.bufferReadyToRead = true;
+        }
+        // pressed backspace key--remove the last character from numpad buffer
+        else if (key == 'b') {
+            if(this.numpadBuffer.Length > 0) {
+                this.bufferReadyToRead = false;
+                this.numpadBuffer = this.numpadBuffer.Remove(this.numpadBuffer.Length - 1, 1);
+            }
+        }
+        // pressed a character key, add key to the buffer
+        else {
+            this.bufferReadyToRead = false;
+            this.numpadBuffer += key;
+        }
+        Debug.Log("SERVER: \"numpad() " + key + "\"");
     }
 
     public void resetModules()

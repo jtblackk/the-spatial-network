@@ -34,7 +34,7 @@ public class ClientController : MonoBehaviour
    public IEnumerator createSocket() {
        // if there's already an active socket, send an error message
        if(this.activeSocketObject != null || this.activeSocketState != state.Closed) {
-           Debug.Log("CLIENT: \"ERROR: A client socket is already in use. No need to create another socket.\"");
+           Debug.Log("CLIENT: \"ERROR: A socket is already in use. No need to create another one on this module.\"");
            yield break;
        }
        

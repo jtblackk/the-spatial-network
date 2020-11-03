@@ -55,7 +55,6 @@ public class PointerHandler : MonoBehaviour
                         //client cases
                         case "c_Create()":
                             StartCoroutine(this.clientArea.GetComponent<ClientController>().createSocket());
-                            // this.clientArea.GetComponent<ClientController>().createSocket();
                             break;
                         case "c_Bind()":
                             this.clientArea.GetComponent<ClientController>().bindSocket();
@@ -126,9 +125,10 @@ public class PointerHandler : MonoBehaviour
                         case "c_enter":
                             this.clientArea.GetComponent<ClientController>().numpad('e');
                             break;
+
                         // server cases
                         case "s_Create()":
-                            this.serverArea.GetComponent<ServerController>().createSocket();
+                            StartCoroutine(this.serverArea.GetComponent<ServerController>().createSocket());
                             break;
                         case "s_Bind()":
                             this.serverArea.GetComponent<ServerController>().bindSocket();
@@ -192,6 +192,12 @@ public class PointerHandler : MonoBehaviour
                             break;
                         case "s_period":
                             this.serverArea.GetComponent<ServerController>().numpad('.');
+                            break;
+                        case "s_backspace":
+                            this.serverArea.GetComponent<ServerController>().numpad('b');
+                            break;
+                        case "s_enter":
+                            this.serverArea.GetComponent<ServerController>().numpad('e');
                             break;
                         default:
                             break;
