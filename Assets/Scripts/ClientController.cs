@@ -19,6 +19,12 @@ public class ClientController : MonoBehaviour
     public string numpadBuffer;
     public bool bufferReadyToRead;
 
+    public GameObject packet;
+    private Vector3 start, target;
+    private float speed = 0.5f;
+    private int input;
+    private GameObject p;
+    
     // shared functions
 
     // helper: clears the numpad buffer and blocks reading from it
@@ -165,7 +171,38 @@ public class ClientController : MonoBehaviour
 
     public void sendData()
     {
+        // Decides which socket, or path
+        // Needs more looking into how we decide ports
+        input = 1;
+        switch (input)
+        {
+            case 1:
+                start = GameObject.Find("Client Area/Client Ports/Socket 1").transform.position;
+                target = GameObject.Find("Server Area/Server Ports/Socket 1").transform.position;
+                break;
+
+        }
+
+        p = Instantiate(this.packet, start, Quaternion.identity);
+        p.name = "tcp_model";
+        p = GameObject.Find("tcp_model");
+
+        Destroy(p, 12);
+
+        Vector3 scaleChange = new Vector3(75f, 75f, 75f);
+
+        p.transform.localScale = scaleChange;
+        p.transform.Rotate(0f, 0f, 90f, Space.Self);
+   
         Debug.Log("CLIENT: \"sendData stub\"");
+    }
+    
+    private void Update()
+    {
+        if (p != null)
+        {
+            p.transform.position = Vector3.MoveTowards(p.transform.position, target, Time.deltaTime * speed);
+        }
     }
 
     public void toggleAutoSend()
