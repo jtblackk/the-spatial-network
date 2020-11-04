@@ -121,10 +121,13 @@ public class ClientController : MonoBehaviour
         this.activeSocketState = state.Bound;
 
         // make socket tube protrude
-        // step 1: move socket object to the correct port hole
+        // a: move socket object to the correct port hole
         this.activeSocketObject.transform.Translate(Vector3.back * (this.activePort - 1) * this.spaceBetweenPorts, Space.World);
         
-        // step 2: move the socket object along the x axis
+        // b. hide the port cover of the current port
+        this.transform.Find("Client Ports").transform.Find("Port Cover " + this.activePort).gameObject.SetActive(false);
+
+        // c: move the socket object along the x axis
         while(this.originalSocketPos.x - this.activeSocketObject.transform.localPosition.x < .309f) {
             this.activeSocketObject.transform.Translate(Vector3.left * .001f);
             yield return null;
@@ -149,16 +152,19 @@ public class ClientController : MonoBehaviour
         this.activePort = 0;
 
         // do close transformations
-        // a. TODO: retreat socket back into port box
+        // a. retreat socket back into port box
         while(this.originalSocketPos.x - this.activeSocketObject.transform.localPosition.x > 0) {
             this.activeSocketObject.transform.Translate(Vector3.right * .001f);
             yield return null;
         }
 
-        // b. move socket back to port 1
+        // b. show port cover
+        this.transform.Find("Client Ports").transform.Find("Port Cover " + closedPort).gameObject.SetActive(true);
+
+        // C. move socket back to port 1
         this.activeSocketObject.transform.Translate(Vector3.forward * (closedPort - 1) * this.spaceBetweenPorts, Space.World);
         
-        // c. hide socket
+        // D. hide socket
         this.activeSocketObject.transform.Find("UDP Socket").gameObject.SetActive(false);
         this.activeSocketObject.transform.Find("TCP Socket").gameObject.SetActive(false);        
     
