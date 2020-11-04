@@ -249,7 +249,7 @@ GameObject:
   m_Component:
   - component: {fileID: 91121824}
   m_Layer: 0
-  m_Name: Socket 1
+  m_Name: SSocket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11046,7 +11046,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activeSocketType: 0
   activePort: 0
-  activeSocketObject: {fileID: 0}
+  activeSocketObject: {fileID: 91121823}
   activeSocketState: 0
   numpadBuffer: 
   bufferReadyToRead: 0

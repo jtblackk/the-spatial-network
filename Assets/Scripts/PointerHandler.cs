@@ -131,10 +131,10 @@ public class PointerHandler : MonoBehaviour
                             StartCoroutine(this.serverArea.GetComponent<ServerController>().createSocket());
                             break;
                         case "s_Bind()":
-                            this.serverArea.GetComponent<ServerController>().bindSocket();
+                             StartCoroutine(this.serverArea.GetComponent<ServerController>().bindSocket());
                             break;
                         case "s_Close()":
-                            this.serverArea.GetComponent<ServerController>().closeSocket();
+                             StartCoroutine(this.serverArea.GetComponent<ServerController>().closeSocket());
                             break;
                         case "s_Connect()":
                             this.serverArea.GetComponent<ServerController>().connectToServer();

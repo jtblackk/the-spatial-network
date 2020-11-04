@@ -125,7 +125,7 @@ public class ClientController : MonoBehaviour
         this.activeSocketObject.transform.Translate(Vector3.back * (this.activePort - 1) * this.spaceBetweenPorts, Space.World);
         
         // step 2: move the socket object along the x axis
-        while(this.originalSocketPos.x - this.activeSocketObject.transform.localPosition.x < .309) {
+        while(this.originalSocketPos.x - this.activeSocketObject.transform.localPosition.x < .309f) {
             this.activeSocketObject.transform.Translate(Vector3.left * .001f);
             yield return null;
         }
