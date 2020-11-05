@@ -3246,7 +3246,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 544058877}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -1.475, y: 1, z: 2.833}
+  m_LocalPosition: {x: -1.475, y: 1, z: 4.587}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2090542899}
@@ -8495,7 +8495,7 @@ PrefabInstance:
     - target: {fileID: 5257355078985532897, guid: 0835d9686f0a61d44841e73193e52b67,
         type: 3}
       propertyPath: m_text
-      value: Reset Modules
+      value: Reset
       objectReference: {fileID: 0}
     - target: {fileID: 5257355078985532897, guid: 0835d9686f0a61d44841e73193e52b67,
         type: 3}
@@ -11678,6 +11678,7 @@ MonoBehaviour:
   activeSocketState: 0
   numpadBuffer: 
   bufferReadyToRead: 0
+  serverArea: {fileID: 0}
 --- !u!4 &1754954479 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6902902759305770864, guid: 0835d9686f0a61d44841e73193e52b67,
@@ -12390,7 +12391,7 @@ PrefabInstance:
     - target: {fileID: 5257355078985532897, guid: 0835d9686f0a61d44841e73193e52b67,
         type: 3}
       propertyPath: m_text
-      value: Reset Modules
+      value: Reset
       objectReference: {fileID: 0}
     - target: {fileID: 5257355078985532897, guid: 0835d9686f0a61d44841e73193e52b67,
         type: 3}
