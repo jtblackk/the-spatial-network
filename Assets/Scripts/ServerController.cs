@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class ServerController : MonoBehaviour
 {   
@@ -19,6 +21,10 @@ public class ServerController : MonoBehaviour
 
     public string numpadBuffer;
     public bool bufferReadyToRead;
+
+
+
+    public GameObject serverArea;
 
     public void Start() {
         this.originalSocketPos = this.activeSocketObject.transform.localPosition;
@@ -82,10 +88,10 @@ public class ServerController : MonoBehaviour
         // check that a socket has been created but hasn't been bound
         if(this.activeSocketState != state.Created) {
             if(this.activeSocketState == state.Bound) {
-                Debug.Log("SERVER \"ERROR: already bound a port on the module\"");
+                Debug.Log("SERVER: \"ERROR: already bound a port on the module\"");
                 yield break;
             }
-            Debug.Log("SERVER \"ERROR: must create a socket before binding it\"");
+            Debug.Log("SERVER: \"ERROR: must create a socket before binding it\"");
             yield break;
         }
 
@@ -130,7 +136,7 @@ public class ServerController : MonoBehaviour
     {
         // check that there's a socket to close
         if(this.activeSocketState == state.Closed) {
-            Debug.Log("SERVER \"ERROR: called close without any sockets opened\"");
+            Debug.Log("SERVER: \"ERROR: called close without any sockets opened\"");
             yield break;
         }
 
@@ -161,6 +167,7 @@ public class ServerController : MonoBehaviour
         Debug.Log("SERVER: \"closeSocket() closed server socket on port " + closedPort + "\"");
     }
 
+
     public void numpad(char key) {
         // pressed enter key--mark buffer as ready to read from
         if(key == 'e') {
@@ -183,24 +190,25 @@ public class ServerController : MonoBehaviour
 
     public void resetModules()
     {
-        Debug.Log("SERVER: resetModules() stub");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
     }
 
 
     // client functions
     public void connectToServer()
     {
-        Debug.Log("SERVER ERROR: The server does not need to connect to a sever");
+        Debug.Log("SERVER: \"ERROR: The server does not need to connect to a sever\"");
     }
 
     public void sendData()
     {
-        Debug.Log("SERVER ERROR: The server does not need to send data");
+        Debug.Log("SERVER: \"ERROR: The server does not need to send data\"");
     }
 
     public void toggleAutoSend()
     {
-        Debug.Log("SERVER ERROR: The server does not need to send data");
+        Debug.Log("SERVER: \"ERROR: The server does not need to send data\"");
     }
 
 
@@ -208,22 +216,22 @@ public class ServerController : MonoBehaviour
     // server functions
     public void listenForConnection()
     {
-        Debug.Log("SERVER: listenForConnection stub");
+        Debug.Log("SERVER: \"listenForConnection stub\"");
     }
 
     public void acceptConnection()
     {
-        Debug.Log("SERVER: acceptConnection stub");
+        Debug.Log("SERVER: \"acceptConnection stub\"");
     }
 
     public void receiveData()
     {
-        Debug.Log("SERVER: receiveData stub");
+        Debug.Log("SERVER: \"receiveData stub\"");
     }
 
     public void toggleAutoReceive()
     {
-        Debug.Log("SERVER: toggleAutoReceive stub");
+        Debug.Log("SERVER: \"toggleAutoReceive stub\"");
     }
 
     

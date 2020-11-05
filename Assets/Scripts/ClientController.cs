@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class ClientController : MonoBehaviour
@@ -32,16 +33,6 @@ public class ClientController : MonoBehaviour
     }
 
     // shared functions
-
-    // helper: clears the numpad buffer and blocks reading from it
-    // returns the original contents of the buffer
-    private string clearNumpadBuffer() {
-        string contents = this.numpadBuffer;
-        this.numpadBuffer = "";
-        this.bufferReadyToRead = false;
-
-        return contents;
-    }
 
    public IEnumerator createSocket() {
        // if there's already an active socket, send an error message
@@ -93,10 +84,10 @@ public class ClientController : MonoBehaviour
         // check that a socket has been created but hasn't been bound
         if(this.activeSocketState != state.Created) {
             if(this.activeSocketState == state.Bound) {
-                Debug.Log("CLIENT \"ERROR: already bound a port on the module\"");
+                Debug.Log("CLIENT: \"ERROR: already bound a port on the module\"");
                 yield break;
             }
-            Debug.Log("CLIENT \"ERROR: must create a socket before binding it\"");
+            Debug.Log("CLIENT: \"ERROR: must create a socket before binding it\"");
             yield break;
         }
 
@@ -141,7 +132,7 @@ public class ClientController : MonoBehaviour
     {   
         // check that there's a socket to close
         if(this.activeSocketState == state.Closed) {
-            Debug.Log("CLIENT \"ERROR: called close without any sockets opened\"");
+            Debug.Log("CLIENT: \"ERROR: called close without any sockets opened\"");
             yield break;
         }
 
@@ -161,16 +152,27 @@ public class ClientController : MonoBehaviour
         // b. show port cover
         this.transform.Find("Client Ports").transform.Find("Port Cover " + closedPort).gameObject.SetActive(true);
 
-        // C. move socket back to port 1
+        // c. move socket back to port 1
         this.activeSocketObject.transform.Translate(Vector3.forward * (closedPort - 1) * this.spaceBetweenPorts, Space.World);
         
-        // D. hide socket
+        // d. hide socket
         this.activeSocketObject.transform.Find("UDP Socket").gameObject.SetActive(false);
         this.activeSocketObject.transform.Find("TCP Socket").gameObject.SetActive(false);        
     
         // return socket tube to original position
         Debug.Log("CLIENT: \"closeSocket() closed client socket on port " + closedPort + "\"");
 
+    }
+
+
+    // helper: clears the numpad buffer and blocks reading from it
+    // returns the original contents of the buffer
+    private string clearNumpadBuffer() {
+        string contents = this.numpadBuffer;
+        this.numpadBuffer = "";
+        this.bufferReadyToRead = false;
+
+        return contents;
     }
 
     public void numpad(char key) {
@@ -195,8 +197,7 @@ public class ClientController : MonoBehaviour
 
     public void resetModules()
     {
-        
-        Debug.Log("CLIENT: \"resetModules() stub\"");
+       SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     // client functions
@@ -251,22 +252,22 @@ public class ClientController : MonoBehaviour
     // server functions
     public void listenForConnection()
     {
-        Debug.Log("CLIENT \"ERROR: The client does not need to listen for a connection.\"");
+        Debug.Log("CLIENT: \"ERROR: The client does not need to listen for a connection.\"");
     }
 
     public void acceptConnection()
     {
-        Debug.Log("CLIENT \"ERROR: The client does not need to accept a connection.\"");
+        Debug.Log("CLIENT: \"ERROR: The client does not need to accept a connection.\"");
     }
 
     public void receiveData()
     {
-        Debug.Log("CLIENT \"ERROR: The client does not need to receive data.\"");
+        Debug.Log("CLIENT: \"ERROR: The client does not need to receive data.\"");
     }
 
     public void toggleAutoReceive()
     {
-        Debug.Log("CLIENT \"ERROR: The client does not need to receive data.\"");
+        Debug.Log("CLIENT: \"ERROR: The client does not need to receive data.\"");
     }
 
     
