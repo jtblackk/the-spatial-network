@@ -5,6 +5,8 @@ using UnityEngine;
 public class ModuleInfo : MonoBehaviour
 {
     public string ip = "";
+    public string instructions = "";
+
     // Start is called before the first frame update
     void Start()
     {
