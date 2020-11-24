@@ -22,9 +22,12 @@ public class ServerController : MonoBehaviour
     public string numpadBuffer;
     public bool bufferReadyToRead;
 
-
+    public List<char> dataReceived = new List<char>();
 
     public GameObject serverArea;
+
+    public bool autoReceiveToggled;
+    public bool screenBlanked;
 
     public void Start() {
         this.originalSocketPos = this.activeSocketObject.transform.localPosition;
@@ -43,7 +46,8 @@ public class ServerController : MonoBehaviour
    public IEnumerator createSocket() {
        // if there's already an active socket, send an error message
        if(this.activeSocketState != state.Closed) {
-           Debug.Log("SERVER: \"ERROR: A socket is already in use. No need to create another one on this module.\"");
+            ServerInstructions.screen.text = "SERVER ERROR: A socket is already in use. No need to create another one on this module.";
+            Debug.Log("SERVER: \"ERROR: A socket is already in use. No need to create another one on this module.\"");
            yield break;
        }
        
@@ -51,6 +55,7 @@ public class ServerController : MonoBehaviour
         // ask user which type of socket to create (TCP or UDP)
         string numpadInput;
         do {
+            ServerInstructions.screen.text = "SERVER: Choose a socket type: (1) UDP (2) TCP";
             Debug.Log("SERVER: \"Choose a socket type: (1) UDP (2) TCP\"");
 
             // clear the numpad buffer
@@ -79,8 +84,9 @@ public class ServerController : MonoBehaviour
             this.activeSocketObject.transform.Find("TCP Socket").gameObject.SetActive(true);
         }
         this.activeSocketState = state.Created;
-        
+
         // present creation feedback
+        ServerInstructions.screen.text = "SERVER: createSocket() created a new " + this.activeSocketType + " socket";
         Debug.Log("SERVER: \"createSocket() created a new " + this.activeSocketType + " socket\"");
    }
 
@@ -88,9 +94,11 @@ public class ServerController : MonoBehaviour
         // check that a socket has been created but hasn't been bound
         if(this.activeSocketState != state.Created) {
             if(this.activeSocketState == state.Bound) {
+                ServerInstructions.screen.text = "SERVER: ERROR: already bound a port on the module";
                 Debug.Log("SERVER: \"ERROR: already bound a port on the module\"");
                 yield break;
             }
+            ServerInstructions.screen.text = "SERVER: ERROR: must create a socket before binding it";
             Debug.Log("SERVER: \"ERROR: must create a socket before binding it\"");
             yield break;
         }
@@ -98,6 +106,7 @@ public class ServerController : MonoBehaviour
         // ask user to select a port to bind to
         string numpadInput;
         do {
+            ServerInstructions.screen.text = "SERVER: Enter a port to bind to (1-4)";
             Debug.Log("SERVER: \"Enter a port to bind to (1-4)\"");
 
             
@@ -128,7 +137,8 @@ public class ServerController : MonoBehaviour
             yield return null;
         }
 
-        // present bind feedback        
+        // present bind feedback 
+        ServerInstructions.screen.text = "SERVER: bindSocket() bound the server socket to port " + this.activePort;
         Debug.Log("SERVER: \"bindSocket() bound the server socket to port " + this.activePort + "\"");
     }
 
@@ -136,6 +146,7 @@ public class ServerController : MonoBehaviour
     {
         // check that there's a socket to close
         if(this.activeSocketState == state.Closed) {
+            ServerInstructions.screen.text = "SERVER: ERROR: called close without any sockets opened";
             Debug.Log("SERVER: \"ERROR: called close without any sockets opened\"");
             yield break;
         }
@@ -162,8 +173,9 @@ public class ServerController : MonoBehaviour
         // d. hide socket
         this.activeSocketObject.transform.Find("UDP Socket").gameObject.SetActive(false);
         this.activeSocketObject.transform.Find("TCP Socket").gameObject.SetActive(false);
-    
+
         // return socket tube to original position
+        ServerInstructions.screen.text = "SERVER: closeSocket() closed server socket on port";
         Debug.Log("SERVER: \"closeSocket() closed server socket on port " + closedPort + "\"");
     }
 
@@ -185,6 +197,7 @@ public class ServerController : MonoBehaviour
             this.bufferReadyToRead = false;
             this.numpadBuffer += key;
         }
+        ServerInstructions.screen.text = "SERVER: numpad() " + key;
         Debug.Log("SERVER: \"numpad() " + key + "\"");
     }
 
@@ -211,8 +224,6 @@ public class ServerController : MonoBehaviour
         Debug.Log("SERVER: \"ERROR: The server does not need to send data\"");
     }
 
-
-
     // server functions
     public void listenForConnection()
     {
@@ -226,13 +237,47 @@ public class ServerController : MonoBehaviour
 
     public void receiveData()
     {
+        int tail = dataReceived.Count;
+
+        if (ServerInstructions.screen.text != "" && !screenBlanked) {
+            ServerInstructions.screen.text = "";
+            screenBlanked = true;
+        }
+        if (tail.Equals(0)) {
+            ServerInstructions.screen.text = "No data to receive";
+        }
+        else {
+            ServerInstructions.screen.text += dataReceived[tail-1];
+            //dataReceived.Remove(dataReceived[tail-1]);
+        }
+        
         Debug.Log("SERVER: \"receiveData stub\"");
     }
 
     public void toggleAutoReceive()
     {
         Debug.Log("SERVER: \"toggleAutoReceive stub\"");
+        autoReceiveToggled = !autoReceiveToggled;
+        StartCoroutine(autoReceive());
     }
 
-    
+    public IEnumerator autoReceive() {
+        while (autoReceiveToggled) {
+            int tail = dataReceived.Count;
+
+            if (ServerInstructions.screen.text != "" && !screenBlanked) {
+                ServerInstructions.screen.text = "";
+                screenBlanked = true;
+                yield return null;
+            }
+            if (!tail.Equals(0)) {
+                ServerInstructions.screen.text += dataReceived[tail-1];
+                //dataReceived.Remove(dataReceived[tail-1]);
+                yield return null;
+            }
+            yield return new WaitForSeconds(1.0f);
+        }
+        screenBlanked = false;
+        yield return null;
+    }
 }

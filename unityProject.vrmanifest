@@ -5,7 +5,7 @@
       "app_key": "application.generated.unity.spatialnetwork.exe",
       "launch_type": "url",
       "url": "steam://launch/",
-      "action_manifest_path": "C:\\Users\\Pickle\\Documents\\spatial-network\\Assets\\StreamingAssets\\SteamVR\\actions.json",
+      "action_manifest_path": "C:\\Users\\Pickle\\Documents\\spatial-network-working\\Assets\\StreamingAssets\\SteamVR\\actions.json",
       "strings": {
         "en_us": {
           "name": "spatial-network [Testing]"
