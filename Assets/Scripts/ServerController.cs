@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using TMPro;
 
 public class ServerController : MonoBehaviour
 {   
@@ -21,6 +21,7 @@ public class ServerController : MonoBehaviour
 
     public string numpadBuffer;
     public bool bufferReadyToRead;
+    public TextMeshPro keypadData;
 
     public List<char> dataReceived = new List<char>();
 
@@ -35,79 +36,73 @@ public class ServerController : MonoBehaviour
 
     // shared functions
 
-    private string clearNumpadBuffer() {
-        string contents = this.numpadBuffer;
-        this.numpadBuffer = "";
-        this.bufferReadyToRead = false;
-
-        return contents;
-    }
 
    public IEnumerator createSocket() {
        // if there's already an active socket, send an error message
        if(this.activeSocketState != state.Closed) {
-            ServerInstructions.screen.text = "SERVER ERROR: A socket is already in use. No need to create another one on this module.";
-            Debug.Log("SERVER: \"ERROR: A socket is already in use. No need to create another one on this module.\"");
+            ServerInstructions.screen.text = "A socket is already in use. No need to create another one on this module.";
+            // Debug.Log("SERVER: \"ERROR: A socket is already in use. No need to create another one on this module.\"");
            yield break;
        }
        
         
         // ask user which type of socket to create (TCP or UDP)
-        string numpadInput;
-        do {
-            ServerInstructions.screen.text = "SERVER: Choose a socket type: (1) UDP (2) TCP";
-            Debug.Log("SERVER: \"Choose a socket type: (1) UDP (2) TCP\"");
+        // string numpadInput;
+        // do {
+        //     ServerInstructions.screen.text = "SERVER: Choose a socket type: (1) UDP (2) TCP";
+        //     Debug.Log("SERVER: \"Choose a socket type: (1) UDP (2) TCP\"");
 
-            // clear the numpad buffer
-            this.clearNumpadBuffer();
+        //     // clear the numpad buffer
+        //     this.clearNumpadBuffer();
 
-            // wait for the numpad buffer to be ready to read
-            while(this.bufferReadyToRead != true) {
-                yield return null;
-            }
+        //     // wait for the numpad buffer to be ready to read
+        //     while(this.bufferReadyToRead != true) {
+        //         yield return null;
+        //     }
 
-            // record and clear the buffer inputs
-            numpadInput = this.clearNumpadBuffer();
+        //     // record and clear the buffer inputs
+        //     numpadInput = this.clearNumpadBuffer();
 
-        } while(numpadInput != "1" && numpadInput != "2");
+        // } while(numpadInput != "1" && numpadInput != "2");
 
 
-         // make the socket visible, update appropriate status variables
-        if (numpadInput == "1") {
-            this.activeSocketType = socketType.UDP;
-            this.activeSocketObject.transform.Find("UDP Socket").gameObject.SetActive(true);
-            this.activeSocketObject.transform.Find("TCP Socket").gameObject.SetActive(false);
-        }        
-        else {
-            this.activeSocketType = socketType.TCP;
-            this.activeSocketObject.transform.Find("UDP Socket").gameObject.SetActive(false);
-            this.activeSocketObject.transform.Find("TCP Socket").gameObject.SetActive(true);
-        }
+        //  // make the socket visible, update appropriate status variables
+        // if (numpadInput == "1") {
+        //     this.activeSocketType = socketType.UDP;
+        //     this.activeSocketObject.transform.Find("UDP Socket").gameObject.SetActive(true);
+        //     this.activeSocketObject.transform.Find("TCP Socket").gameObject.SetActive(false);
+        // }        
+        // else {
+        //     this.activeSocketType = socketType.TCP;
+        //     this.activeSocketObject.transform.Find("UDP Socket").gameObject.SetActive(false);
+        //     this.activeSocketObject.transform.Find("TCP Socket").gameObject.SetActive(true);
+        // }
+
+        this.activeSocketType = socketType.UDP;
+        this.activeSocketObject.transform.Find("UDP Socket").gameObject.SetActive(true);
+        this.activeSocketObject.transform.Find("TCP Socket").gameObject.SetActive(false);
         this.activeSocketState = state.Created;
 
         // present creation feedback
-        ServerInstructions.screen.text = "SERVER: createSocket() created a new " + this.activeSocketType + " socket";
-        Debug.Log("SERVER: \"createSocket() created a new " + this.activeSocketType + " socket\"");
+        ServerInstructions.screen.text = "created a new " + this.activeSocketType + " socket";
    }
 
     public IEnumerator bindSocket() {
         // check that a socket has been created but hasn't been bound
         if(this.activeSocketState != state.Created) {
             if(this.activeSocketState == state.Bound) {
-                ServerInstructions.screen.text = "SERVER: ERROR: already bound a port on the module";
-                Debug.Log("SERVER: \"ERROR: already bound a port on the module\"");
+                ServerInstructions.screen.text = "ERROR: already bound a port on the module";
                 yield break;
             }
-            ServerInstructions.screen.text = "SERVER: ERROR: must create a socket before binding it";
-            Debug.Log("SERVER: \"ERROR: must create a socket before binding it\"");
+            ServerInstructions.screen.text = "ERROR: must create a socket before binding it";
             yield break;
         }
 
         // ask user to select a port to bind to
         string numpadInput;
         do {
-            ServerInstructions.screen.text = "SERVER: Enter a port to bind to (1-4)";
-            Debug.Log("SERVER: \"Enter a port to bind to (1-4)\"");
+            ServerInstructions.screen.text = "enter a port to bind to\n(1-4 on keypad)\n\npress enter when finished";
+            // Debug.Log("SERVER: \"Enter a port to bind to (1-4)\"");
 
             
             this.clearNumpadBuffer();
@@ -138,16 +133,14 @@ public class ServerController : MonoBehaviour
         }
 
         // present bind feedback 
-        ServerInstructions.screen.text = "SERVER: bindSocket() bound the server socket to port " + this.activePort;
-        Debug.Log("SERVER: \"bindSocket() bound the server socket to port " + this.activePort + "\"");
+        ServerInstructions.screen.text = "bound the socket to port " + this.activePort;
     }
 
     public IEnumerator closeSocket()
     {
         // check that there's a socket to close
         if(this.activeSocketState == state.Closed) {
-            ServerInstructions.screen.text = "SERVER: ERROR: called close without any sockets opened";
-            Debug.Log("SERVER: \"ERROR: called close without any sockets opened\"");
+            ServerInstructions.screen.text = "ERROR: called close without any sockets opened";
             yield break;
         }
 
@@ -174,11 +167,19 @@ public class ServerController : MonoBehaviour
         this.activeSocketObject.transform.Find("UDP Socket").gameObject.SetActive(false);
         this.activeSocketObject.transform.Find("TCP Socket").gameObject.SetActive(false);
 
-        // return socket tube to original position
-        ServerInstructions.screen.text = "SERVER: closeSocket() closed server socket on port";
-        Debug.Log("SERVER: \"closeSocket() closed server socket on port " + closedPort + "\"");
+        // present feedback
+        ServerInstructions.screen.text = "closed socket on port " + closedPort;
+        // Debug.Log("SERVER: \"closeSocket() closed server socket on port " + closedPort + "\"");
     }
 
+    private string clearNumpadBuffer() {
+        string contents = this.numpadBuffer;
+        this.numpadBuffer = "";
+        keypadData.text = this.numpadBuffer;
+        this.bufferReadyToRead = false;
+
+        return contents;
+    }
 
     public void numpad(char key) {
         // pressed enter key--mark buffer as ready to read from
@@ -190,15 +191,15 @@ public class ServerController : MonoBehaviour
             if(this.numpadBuffer.Length > 0) {
                 this.bufferReadyToRead = false;
                 this.numpadBuffer = this.numpadBuffer.Remove(this.numpadBuffer.Length - 1, 1);
+                keypadData.text = this.numpadBuffer;
             }
         }
         // pressed a character key, add key to the buffer
         else {
             this.bufferReadyToRead = false;
             this.numpadBuffer += key;
+            keypadData.text = this.numpadBuffer;
         }
-        ServerInstructions.screen.text = "SERVER: numpad() " + key;
-        Debug.Log("SERVER: \"numpad() " + key + "\"");
     }
 
     public void resetModules()
@@ -211,28 +212,30 @@ public class ServerController : MonoBehaviour
     // client functions
     public void connectToServer()
     {
-        Debug.Log("SERVER: \"ERROR: The server does not need to connect to a sever\"");
+        ServerInstructions.screen.text = "ERROR: connecting is only done on a TCP client";
     }
 
     public void sendData()
     {
-        Debug.Log("SERVER: \"ERROR: The server does not need to send data\"");
+        ServerInstructions.screen.text = "ERROR: only the client sends data";
     }
 
     public void toggleAutoSend()
     {
-        Debug.Log("SERVER: \"ERROR: The server does not need to send data\"");
+        ServerInstructions.screen.text = "ERROR: only the client sends data. No need for auto-send";
     }
 
     // server functions
     public void listenForConnection()
     {
-        Debug.Log("SERVER: \"listenForConnection stub\"");
+        // Debug.Log("SERVER: \"listenForConnection stub\"");
+        ServerInstructions.screen.text = "ERROR: listening is only done when using TCP";
     }
 
     public void acceptConnection()
     {
-        Debug.Log("SERVER: \"acceptConnection stub\"");
+        ServerInstructions.screen.text = "ERROR: accepting is only done when using TCP";
+        // Debug.Log("SERVER: \"acceptConnection stub\"");
     }
 
     public void receiveData()
@@ -244,19 +247,19 @@ public class ServerController : MonoBehaviour
             screenBlanked = true;
         }
         if (tail.Equals(0)) {
-            ServerInstructions.screen.text = "No data to receive";
+            ServerInstructions.screen.text = "No data to process";
         }
         else {
             ServerInstructions.screen.text += dataReceived[tail-1];
             //dataReceived.Remove(dataReceived[tail-1]);
         }
         
-        Debug.Log("SERVER: \"receiveData stub\"");
+        // Debug.Log("SERVER: \"receiveData stub\"");
     }
 
     public void toggleAutoReceive()
     {
-        Debug.Log("SERVER: \"toggleAutoReceive stub\"");
+        // Debug.Log("SERVER: \"toggleAutoReceive stub\"");
         autoReceiveToggled = !autoReceiveToggled;
         StartCoroutine(autoReceive());
     }

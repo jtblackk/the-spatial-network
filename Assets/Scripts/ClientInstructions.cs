@@ -21,7 +21,7 @@ public class ClientInstructions : MonoBehaviour
         text = this.transform.GetChild(0).gameObject;
 
         screen = text.GetComponent<TextMeshPro>();
-        screen.text = "CLIENT MACHINE";
+        screen.text = "Press a button to begin";
 
     }
 

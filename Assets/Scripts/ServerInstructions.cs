@@ -21,7 +21,7 @@ public class ServerInstructions : MonoBehaviour
         text = this.transform.GetChild(0).gameObject;
 
         screen = text.GetComponent<TextMeshPro>();
-        screen.text = "SERVER MACHINE";
+        screen.text = "Press a button to begin";
 
     }
 

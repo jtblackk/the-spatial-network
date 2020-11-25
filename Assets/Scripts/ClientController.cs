@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random=UnityEngine.Random;
+using TMPro;
 
 public class ClientController : MonoBehaviour
 {   
@@ -22,6 +23,7 @@ public class ClientController : MonoBehaviour
 
     public string numpadBuffer;
     public bool bufferReadyToRead;
+    public TextMeshPro keypadData;
 
     public GameObject packet;
     private Vector3 start, target;
@@ -43,49 +45,50 @@ public class ClientController : MonoBehaviour
    public IEnumerator createSocket() {
        // if there's already an active socket, send an error message
        if(this.activeSocketState != state.Closed) {
-            ClientInstructions.screen.text = "CLIENT ERROR: A socket is already in use. No need to create another one on this module.";
-            Debug.Log("CLIENT: \"ERROR: A socket is already in use. No need to create another one on this module.\"");
+            ClientInstructions.screen.text = "A socket is already in use. No need to create another one on this module.";
             yield break;
        }
        
         
         // ask user which type of socket to create (TCP or UDP)
-        string numpadInput;
-        do {
-            ClientInstructions.screen.text = "CLIENT: Choose a socket type: (1) UDP (2) TCP";
-            Debug.Log("CLIENT: \"Choose a socket type: (1) UDP (2) TCP\"");
+        // string numpadInput;
+        // do {
+        //     ClientInstructions.screen.text = "Choose a socket type\n\n On the keypad\npress 1 (UDP) or 2 (TCP)\n\npress enter when finished";
 
-            // clear the numpad buffer
-            this.clearNumpadBuffer();
+        //     // clear the numpad buffer
+        //     this.clearNumpadBuffer();
 
-            // wait for the numpad buffer to be ready to read
-            while(this.bufferReadyToRead != true) {
-                yield return null;
-            }
+        //     // wait for the numpad buffer to be ready to read
+        //     while(this.bufferReadyToRead != true) {
+        //         yield return null;
+        //     }
 
-            // record and clear the buffer inputs
-            numpadInput = this.clearNumpadBuffer();
+        //     // record and clear the buffer inputs
+        //     numpadInput = this.clearNumpadBuffer();
 
-        } while(numpadInput != "1" && numpadInput != "2");
+        // } while(numpadInput != "1" && numpadInput != "2");
 
 
         // make the socket visible, update appropriate status variables
-        if (numpadInput == "1") {
-            this.activeSocketType = socketType.UDP;
-            this.activeSocketObject.transform.Find("UDP Socket").gameObject.SetActive(true);
-            this.activeSocketObject.transform.Find("TCP Socket").gameObject.SetActive(false);
-        }        
-        else {
-            this.activeSocketType = socketType.TCP;
-            this.activeSocketObject.transform.Find("UDP Socket").gameObject.SetActive(false);
-            this.activeSocketObject.transform.Find("TCP Socket").gameObject.SetActive(true);
-        }
+        // if (numpadInput == "1") {
+        //     this.activeSocketType = socketType.UDP;
+        //     this.activeSocketObject.transform.Find("UDP Socket").gameObject.SetActive(true);
+        //     this.activeSocketObject.transform.Find("TCP Socket").gameObject.SetActive(false);
+        // }        
+        // else {
+        //     this.activeSocketType = socketType.TCP;
+        //     this.activeSocketObject.transform.Find("UDP Socket").gameObject.SetActive(false);
+        //     this.activeSocketObject.transform.Find("TCP Socket").gameObject.SetActive(true);
+        // }
+        
+        this.activeSocketType = socketType.UDP;
+        this.activeSocketObject.transform.Find("UDP Socket").gameObject.SetActive(true);
+        this.activeSocketObject.transform.Find("TCP Socket").gameObject.SetActive(false);
         this.activeSocketState = state.Created;
 
 
         // present creation feedback
-        ClientInstructions.screen.text = "CLIENT: createSocket() created a new " + this.activeSocketType + " socket";
-        Debug.Log("CLIENT: \"createSocket() created a new " + this.activeSocketType + " socket\"");
+        ClientInstructions.screen.text = "created a new " + this.activeSocketType + " socket \n";
 
    }
 
@@ -93,21 +96,17 @@ public class ClientController : MonoBehaviour
         // check that a socket has been created but hasn't been bound
         if(this.activeSocketState != state.Created) {
             if(this.activeSocketState == state.Bound) {
-                ClientInstructions.screen.text = "CLIENT ERROR: already bound a port on the module";
-                Debug.Log("CLIENT: \"ERROR: already bound a port on the module\"");
+                ClientInstructions.screen.text = "ERROR: already bound a port on the module";
                 yield break;
             }
-            ClientInstructions.screen.text = "CLIENT ERROR: must create a socket before binding it";
-            Debug.Log("CLIENT: \"ERROR: must create a socket before binding it\"");
+            ClientInstructions.screen.text = "ERROR: must create a socket before binding it";
             yield break;
         }
 
         // ask user to select a port to bind to
         string numpadInput;
         do {
-            ClientInstructions.screen.text = "CLIENT: Enter a port to bind to (1-4)";
-            Debug.Log("CLIENT: \"Enter a port to bind to (1-4)\"");
-
+            ClientInstructions.screen.text = "enter a port to bind to\n(1-4 on keypad)\n\npress enter when finished";
             
             this.clearNumpadBuffer();
 
@@ -137,16 +136,15 @@ public class ClientController : MonoBehaviour
         }
 
         // present bind feedback        
-        ClientInstructions.screen.text = "CLIENT: bindSocket() bound the client socket to port " + this.activePort;
-        Debug.Log("CLIENT: \"bindSocket() bound the client socket to port " + this.activePort + "\"");
+        ClientInstructions.screen.text = "bound the socket to port " + this.activePort;
     }
 
     public IEnumerator closeSocket()
     {   
         // check that there's a socket to close
         if(this.activeSocketState == state.Closed) {
-            ClientInstructions.screen.text = "CLIENT ERROR: called close without any sockets opened";
-            Debug.Log("CLIENT: \"ERROR: called close without any sockets opened\"");
+            ClientInstructions.screen.text = "ERROR: called close without any sockets opened";
+            // Debug.Log("CLIENT: \"ERROR: called close without any sockets opened\"");
             yield break;
         }
 
@@ -173,9 +171,8 @@ public class ClientController : MonoBehaviour
         this.activeSocketObject.transform.Find("UDP Socket").gameObject.SetActive(false);
         this.activeSocketObject.transform.Find("TCP Socket").gameObject.SetActive(false);
 
-        // return socket tube to original position
-        ClientInstructions.screen.text = "CLIENT: closeSocket() closed client socket on port " + closedPort;
-        Debug.Log("CLIENT: \"closeSocket() closed client socket on port " + closedPort + "\"");
+        // present feedback
+        ClientInstructions.screen.text = "closed socket on port " + closedPort;
 
     }
 
@@ -185,6 +182,7 @@ public class ClientController : MonoBehaviour
     private string clearNumpadBuffer() {
         string contents = this.numpadBuffer;
         this.numpadBuffer = "";
+        keypadData.text = this.numpadBuffer;
         this.bufferReadyToRead = false;
 
         return contents;
@@ -200,15 +198,15 @@ public class ClientController : MonoBehaviour
             if(this.numpadBuffer.Length > 0) {
                 this.bufferReadyToRead = false;
                 this.numpadBuffer = this.numpadBuffer.Remove(this.numpadBuffer.Length - 1, 1);
+                keypadData.text = this.numpadBuffer;
             }
         }
         // pressed a character key, add key to the buffer
         else {
             this.bufferReadyToRead = false;
             this.numpadBuffer += key;
+            keypadData.text = this.numpadBuffer;
         }
-        ClientInstructions.screen.text = "CLIENT: numpad() " + key;
-        Debug.Log("CLIENT: \"numpad() " + key + "\"");
     }
 
     public void resetModules()
@@ -217,10 +215,6 @@ public class ClientController : MonoBehaviour
     }
 
     // client functions
-    public void connectToServer()
-    {
-        Debug.Log("CLIENT: \"connectToServer stub\"");
-    }
 
     // TODO:
     // Might want to rename function to createPacket, split up into assigning data to packet
@@ -253,8 +247,8 @@ public class ClientController : MonoBehaviour
         p.transform.localScale = scaleChange;
         p.transform.Rotate(0f, 0f, 90f, Space.Self);
 
-        ClientInstructions.screen.text = "Sending data...";
-        Debug.Log("CLIENT: \"sendData stub\"");
+        ClientInstructions.screen.text = "Sent data";
+        // Debug.Log("CLIENT: \"sendData stub\"");
     }
 
     public void sendPacket() {
@@ -290,8 +284,10 @@ public class ClientController : MonoBehaviour
     }
 
     public void toggleAutoSend()
-    {
+    {   
         autoSendToggled = !autoSendToggled;
+        if(autoSendToggled) ClientInstructions.screen.text = "auto-send enabled";
+        else ClientInstructions.screen.text = "auto-send disabled";
         StartCoroutine(autoSend());
         Debug.Log("CLIENT: \"toggleAutoSend stub\"");
     }
@@ -304,25 +300,32 @@ public class ClientController : MonoBehaviour
         }
     }
 
+    public void connectToServer()
+    {
+        ClientInstructions.screen.text = "ERROR: no need to connect when using UDP. Only on TCP.";
+    }
+    
     // server functions
     public void listenForConnection()
     {
-        Debug.Log("CLIENT: \"ERROR: The client does not need to listen for a connection.\"");
+        ClientInstructions.screen.text = "ERROR: listening is only done on a TCP server.";
+
     }
 
     public void acceptConnection()
     {
-        Debug.Log("CLIENT: \"ERROR: The client does not need to accept a connection.\"");
+        ClientInstructions.screen.text = "ERROR: accepting is only done on a TCP server.";
     }
 
     public void receiveData()
     {
-        Debug.Log("CLIENT: \"ERROR: The client does not need to receive data.\"");
+        ClientInstructions.screen.text = "ERROR: only the server receives data";
+
     }
 
     public void toggleAutoReceive()
     {
-        Debug.Log("CLIENT: \"ERROR: The client does not need to receive data.\"");
+        ClientInstructions.screen.text = "ERROR: only the server receives data";
     }
 
     
