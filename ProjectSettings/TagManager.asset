@@ -8,6 +8,10 @@ TagManager:
   - Button
   - VRPlayer
   - Switch
+  - UDPThrowable
+  - Server
+  - Client
+  - PortBox
   layers:
   - Default
   - TransparentFX
