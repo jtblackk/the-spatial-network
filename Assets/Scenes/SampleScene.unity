@@ -2896,7 +2896,6 @@ MonoBehaviour:
   bufferReadyToRead: 0
   keypadData: {fileID: 692296002}
   packet: {fileID: 5942536736584730463, guid: f238cda00aebb4843b9a11618836788a, type: 3}
-  taskList: {fileID: 484730980}
 --- !u!1 &185507023 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: cd89b99171beb06449278690b5243621,
@@ -3035,7 +3034,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.1999988, y: -46}
+  m_AnchoredPosition: {x: -0.1999988, y: -43.1}
   m_SizeDelta: {x: 192.41, y: 77.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &192200465
@@ -4610,7 +4609,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Send data
+  m_Text: Close socket
 --- !u!222 &317558848
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -12546,7 +12545,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Receive data
+  m_Text: Close socket
 --- !u!222 &955419938
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -24101,7 +24100,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 17.3, y: -0.5}
+  m_AnchoredPosition: {x: 32.3, y: -0.5}
   m_SizeDelta: {x: 19.9, y: 14}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1971937884
