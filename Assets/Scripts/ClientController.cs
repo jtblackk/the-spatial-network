@@ -274,11 +274,11 @@ public class ClientController : MonoBehaviour
     public IEnumerator sendData()
     {
 
-        // retrieve the ip address to send data to by using the numpad.
+        // retrieve the ip address and port to send data to by using the numpad.
         // TODO: this should only be done once if using auto-send
         string numpadInput;
         do {
-            ClientInstructions.screen.text = "enter the ip address of the module to send data to";
+            ClientInstructions.screen.text = "enter the ip address of the module to send data to by using the keypad\n\n press enter when finished";
             
             this.clearNumpadBuffer();
 
@@ -291,6 +291,19 @@ public class ClientController : MonoBehaviour
         } while(numpadInput != "192.168.0.2");
         string destIP = numpadInput;
 
+        do {
+            ClientInstructions.screen.text = "enter a port to send the data to (1-4 on keypad)\n\npress enter when finished";;
+            
+            this.clearNumpadBuffer();
+
+            // wait for the numpad buffer to be ready to read
+            while(this.bufferReadyToRead != true) {
+                yield return null;
+            }
+            
+            numpadInput = this.clearNumpadBuffer();
+        } while(Int32.Parse(numpadInput) < 1 || Int32.Parse(numpadInput) > 4);
+        string destPort = numpadInput;
 
         // bind the client socket to a random port if the user did not bind it
         if(activeSocketState != state.Bound) {
