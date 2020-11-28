@@ -5,15 +5,16 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random=UnityEngine.Random;
 using TMPro;
+using UnityEngine.UIElements;
 
 public class ClientController : MonoBehaviour
 {   
     public enum socketType {None, TCP, UDP};
-    public socketType activeSocketType;
+    private socketType activeSocketType;
 
-    public ServerController server;
+    private ServerController server;
 
-    public int activePort;
+    private  int activePort;
     private Vector3 originalSocketPos;
     private float spaceBetweenPorts = .505f;
     public GameObject activeSocketObject;
@@ -34,10 +35,26 @@ public class ClientController : MonoBehaviour
     bool autoSendToggled;
     bool payloadIndexed;
     
+    List<GameObject> checkmarks;
 
     public void Start() {
         this.originalSocketPos = this.activeSocketObject.transform.localPosition;
         server = GameObject.FindWithTag("Server").GetComponent<ServerController>();
+        
+        // GameObject checkmark = GameObject.Find("Task (client create)/Checkmark");
+        checkmarks = new List<GameObject>();
+        GameObject[] objs = FindObjectsOfType<GameObject>();
+        foreach(GameObject obj in objs) {
+            if(obj.name.Contains("Checkmark (c")) {
+                // Debug.Log("adding " + obj.name + "to the list");
+                checkmarks.Add(obj);
+                obj.SetActive(false);
+            }
+        }
+        // checkmarks.Reverse();
+        // Debug.Log(checkmarks);
+        // Debug.Log("client controller loaded");
+
     }
 
     // shared functions
@@ -89,6 +106,11 @@ public class ClientController : MonoBehaviour
 
         // present creation feedback
         ClientInstructions.screen.text = "created a new " + this.activeSocketType + " socket \n";
+        foreach(GameObject obj in checkmarks) {
+            if(obj.name == "Checkmark (cc)") {
+               obj.SetActive(true);
+            }
+        }
 
    }
 
@@ -137,6 +159,31 @@ public class ClientController : MonoBehaviour
 
         // present bind feedback        
         ClientInstructions.screen.text = "bound the socket to port " + this.activePort;
+        foreach(GameObject obj in checkmarks) {
+            if(obj.name == "Checkmark (cb)") {
+               obj.SetActive(true);
+            }
+        }
+    }
+
+    public IEnumerator bindSocketRandom() {
+        // bind the socket, update appropriate values
+        this.activePort = (int)Random.Range(1, 4);
+        // this.activeSocketState = state.Bound;
+
+        // make socket tube protrude
+        // a: move socket object to the correct port hole
+        this.activeSocketObject.transform.Translate(Vector3.back * (this.activePort - 1) * this.spaceBetweenPorts, Space.World);
+        
+        // b. hide the port cover of the current port
+        this.transform.Find("Client Ports").transform.Find("Port Cover " + this.activePort).gameObject.SetActive(false);
+
+        // c: move the socket object along the x axis
+        while(this.originalSocketPos.x - this.activeSocketObject.transform.localPosition.x < .309f) {
+            this.activeSocketObject.transform.Translate(Vector3.left * .001f);
+            yield return null;
+        }
+        this.activeSocketState = state.Bound;
     }
 
     public IEnumerator closeSocket()
@@ -173,6 +220,11 @@ public class ClientController : MonoBehaviour
 
         // present feedback
         ClientInstructions.screen.text = "closed socket on port " + closedPort;
+        foreach(GameObject obj in checkmarks) {
+            if(obj.name == "Checkmark (ccl)") {
+               obj.SetActive(true);
+            }
+        }
 
     }
 
@@ -219,8 +271,36 @@ public class ClientController : MonoBehaviour
     // TODO:
     // Might want to rename function to createPacket, split up into assigning data to packet
     // and creation and travel of the packet object itself.
-    public void sendData()
+    public IEnumerator sendData()
     {
+
+        // retrieve the ip address to send data to by using the numpad.
+        // TODO: this should only be done once if using auto-send
+        string numpadInput;
+        do {
+            ClientInstructions.screen.text = "enter the ip address of the module to send data to";
+            
+            this.clearNumpadBuffer();
+
+            // wait for the numpad buffer to be ready to read
+            while(this.bufferReadyToRead != true) {
+                yield return null;
+            }
+            
+            numpadInput = this.clearNumpadBuffer();
+        } while(numpadInput != "192.168.0.2");
+        string destIP = numpadInput;
+
+
+        // bind the client socket to a random port if the user did not bind it
+        if(activeSocketState != state.Bound) {
+            StartCoroutine(bindSocketRandom());
+            while(activeSocketState != state.Bound) {
+                yield return null;
+            }
+        }
+
+
         // Decides which socket, or path
         // Needs more looking into how we decide ports
         input = 1;
@@ -248,6 +328,12 @@ public class ClientController : MonoBehaviour
         p.transform.Rotate(0f, 0f, 90f, Space.Self);
 
         ClientInstructions.screen.text = "Sent data";
+      
+        foreach(GameObject obj in checkmarks) {
+            if(obj.name == "Checkmark (cs)") {
+               obj.SetActive(true);
+            }
+        }
         // Debug.Log("CLIENT: \"sendData stub\"");
     }
 

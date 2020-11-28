@@ -66,7 +66,8 @@ public class PointerHandler : MonoBehaviour
                             this.clientArea.GetComponent<ClientController>().connectToServer();
                             break;
                         case "c_Send()":
-                            this.clientArea.GetComponent<ClientController>().sendData();
+                            // this.clientArea.GetComponent<ClientController>().sendData();
+                            StartCoroutine(this.clientArea.GetComponent<ClientController>().sendData());
                             break;
                         case "c_Auto_Send()":
                             this.clientArea.GetComponent<ClientController>().toggleAutoSend();

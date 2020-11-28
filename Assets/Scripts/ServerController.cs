@@ -9,9 +9,9 @@ public class ServerController : MonoBehaviour
 {   
     
     public enum socketType {None, TCP, UDP};
-    public socketType activeSocketType;
+    private socketType activeSocketType;
 
-    public int activePort;
+    private int activePort;
     private Vector3 originalSocketPos;
     private float spaceBetweenPorts = .505f;
     public GameObject activeSocketObject;
@@ -30,8 +30,21 @@ public class ServerController : MonoBehaviour
     public bool autoReceiveToggled;
     public bool screenBlanked;
 
+    List<GameObject> checkmarks;
+
     public void Start() {
         this.originalSocketPos = this.activeSocketObject.transform.localPosition;
+        
+        checkmarks = new List<GameObject>();
+        GameObject[] objs = FindObjectsOfType<GameObject>();
+        foreach(GameObject obj in objs) {
+            if(obj.name.Contains("Checkmark (s")) {
+                // Debug.Log("adding " + obj.name + "to the list");
+                checkmarks.Add(obj);
+                obj.SetActive(false);
+            }
+        }
+        checkmarks.Reverse();
     }
 
     // shared functions
@@ -85,6 +98,11 @@ public class ServerController : MonoBehaviour
 
         // present creation feedback
         ServerInstructions.screen.text = "created a new " + this.activeSocketType + " socket";
+        foreach(GameObject obj in checkmarks) {
+            if(obj.name == "Checkmark (sc)") {
+               obj.SetActive(true);
+            }
+        }
    }
 
     public IEnumerator bindSocket() {
@@ -134,6 +152,11 @@ public class ServerController : MonoBehaviour
 
         // present bind feedback 
         ServerInstructions.screen.text = "bound the socket to port " + this.activePort;
+        foreach(GameObject obj in checkmarks) {
+            if(obj.name == "Checkmark (sb)") {
+               obj.SetActive(true);
+            }
+        }
     }
 
     public IEnumerator closeSocket()
@@ -169,7 +192,11 @@ public class ServerController : MonoBehaviour
 
         // present feedback
         ServerInstructions.screen.text = "closed socket on port " + closedPort;
-        // Debug.Log("SERVER: \"closeSocket() closed server socket on port " + closedPort + "\"");
+        foreach(GameObject obj in checkmarks) {
+            if(obj.name == "Checkmark (scl)") {
+               obj.SetActive(true);
+            }
+        }
     }
 
     private string clearNumpadBuffer() {
@@ -248,6 +275,7 @@ public class ServerController : MonoBehaviour
         }
         if (tail.Equals(0)) {
             ServerInstructions.screen.text = "No data to process";
+            return;
         }
         else {
             ServerInstructions.screen.text += dataReceived[tail-1];
@@ -255,6 +283,11 @@ public class ServerController : MonoBehaviour
         }
         
         // Debug.Log("SERVER: \"receiveData stub\"");
+        foreach(GameObject obj in checkmarks) {
+            if(obj.name == "Checkmark (sr)") {
+               obj.SetActive(true);
+            }
+        }
     }
 
     public void toggleAutoReceive()
