@@ -25,7 +25,6 @@ public class MoreInfoVisibility : MonoBehaviour
     }
 
     public void toggleInfo() {
-        Debug.Log(infoText.name);
         if(isVisible) {
             this.isVisible = false;
             this.infoText.SetActive(false);
@@ -37,7 +36,7 @@ public class MoreInfoVisibility : MonoBehaviour
             this.isVisible = true;
             this.infoText.SetActive(true); 
             this.gameObject.SetActive(true); 
-            exitButton.SetActive(true);
+            // exitButton.SetActive(true);
 
         }
             
