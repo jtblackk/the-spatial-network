@@ -23,16 +23,18 @@ public class DesktopThrowable : MonoBehaviour
     {
         if (!held) {
             
-            if (GameObject.FindWithTag("Player").activeSelf) {
+            if (GameObject.FindWithTag("Player")) {
                 player = GameObject.FindWithTag("Player");
-                if (Input.GetMouseButtonDown(0) && !held) {
-                    RaycastHit hit;
-                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                    if (Physics.Raycast (ray, out hit, 100.0f)) {
-                        if (hit.transform.tag == "UDPThrowable") {
-                            packetObject = hit.transform.gameObject;
-                            packetObject.GetComponent<Rigidbody>().useGravity = false;
-                            held = true;
+                if (player.activeSelf) {
+                    if (Input.GetMouseButtonDown(0) && !held) {
+                        RaycastHit hit;
+                        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                        if (Physics.Raycast (ray, out hit, 100.0f)) {
+                            if (hit.transform.tag == "UDPThrowable") {
+                                packetObject = hit.transform.gameObject;
+                                packetObject.GetComponent<Rigidbody>().useGravity = false;
+                                held = true;
+                            }
                         }
                     }
                 }
