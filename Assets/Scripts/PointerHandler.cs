@@ -13,11 +13,14 @@ public class PointerHandler : MonoBehaviour
     public GameObject clientArea;
     public GameObject serverArea;
 
+    // List<GameObject> moreInfoButtons;
+
     void Awake()
     {
         laserPointer.PointerIn += PointerInside;
         laserPointer.PointerOut += PointerOutside;
         laserPointer.PointerClick += PointerClick;
+
     }
 
     private void processInput(String buttonName) {
@@ -36,7 +39,6 @@ public class PointerHandler : MonoBehaviour
                 this.clientArea.GetComponent<ClientController>().connectToServer();
                 break;
             case "c_Send()":
-                // this.clientArea.GetComponent<ClientController>().sendData();
                 StartCoroutine(this.clientArea.GetComponent<ClientController>().sendData());
                 break;
             case "c_Auto_Send()":
@@ -169,6 +171,40 @@ public class PointerHandler : MonoBehaviour
                 break;
             case "s_enter":
                 this.serverArea.GetComponent<ServerController>().numpad('e');
+                break;
+            // task board cases
+            case "More Info Button (cc)":
+                GameObject.Find("Info pages").transform.Find("Client Create").GetComponent<MoreInfoVisibility>().toggleInfo();
+                break;
+            case "More Info Button (cb)":
+                GameObject.Find("Info pages").transform.Find("Client Bind").GetComponent<MoreInfoVisibility>().toggleInfo();
+                break;
+            case "More Info Button (sc)":
+                GameObject.Find("Info pages").transform.Find("Server Create").GetComponent<MoreInfoVisibility>().toggleInfo();
+                break;
+            case "More Info Button (sb)":
+                GameObject.Find("Info pages").transform.Find("Server Bind").GetComponent<MoreInfoVisibility>().toggleInfo();
+                break;
+            case "More Info Button (sr)":
+                GameObject.Find("Info pages").transform.Find("Server Receive").GetComponent<MoreInfoVisibility>().toggleInfo();
+                break;
+            case "More Info Button (cs)":
+                GameObject.Find("Info pages").transform.Find("Client Send").GetComponent<MoreInfoVisibility>().toggleInfo();
+                break;
+            case "More Info Button (scl)":
+                GameObject.Find("Info pages").transform.Find("Server Close").GetComponent<MoreInfoVisibility>().toggleInfo();
+                break;
+            case "More Info Button (ccl)":
+                GameObject.Find("Info pages").transform.Find("Client Close").GetComponent<MoreInfoVisibility>().toggleInfo();
+                break;
+            case "Exit button":
+            Debug.Log("working!");
+                GameObject info_pages = GameObject.Find("Info pages");
+                foreach(Transform page in info_pages.transform) {
+                    if(page.gameObject.activeSelf == true) {
+                        page.GetComponent<MoreInfoVisibility>().toggleInfo();
+                    }
+                }
                 break;
             default:
                 break;

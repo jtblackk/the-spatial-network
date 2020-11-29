@@ -1329,6 +1329,7 @@ GameObject:
   - component: {fileID: 94485810}
   - component: {fileID: 94485809}
   - component: {fileID: 94485808}
+  - component: {fileID: 94485811}
   m_Layer: 5
   m_Name: Exit button
   m_TagString: Untagged
@@ -1447,6 +1448,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 94485806}
   m_CullTransparentMesh: 0
+--- !u!65 &94485811
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 94485806}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 18.65, y: 12.93, z: 33.62}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &103716482
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6515,7 +6529,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &544058878
 Transform:
   m_ObjectHideFlags: 0
@@ -7160,6 +7174,7 @@ GameObject:
   - component: {fileID: 560764717}
   - component: {fileID: 560764716}
   - component: {fileID: 560764715}
+  - component: {fileID: 560764718}
   m_Layer: 5
   m_Name: Exit button
   m_TagString: Untagged
@@ -7278,6 +7293,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 560764713}
   m_CullTransparentMesh: 0
+--- !u!65 &560764718
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 560764713}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 18.65, y: 12.93, z: 33.62}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &561339292
 GameObject:
   m_ObjectHideFlags: 0
@@ -7290,6 +7318,7 @@ GameObject:
   - component: {fileID: 561339296}
   - component: {fileID: 561339295}
   - component: {fileID: 561339294}
+  - component: {fileID: 561339297}
   m_Layer: 5
   m_Name: Exit button
   m_TagString: Untagged
@@ -7408,6 +7437,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 561339292}
   m_CullTransparentMesh: 0
+--- !u!65 &561339297
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 561339292}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 18.65, y: 12.93, z: 33.62}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &599719375
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7895,8 +7937,9 @@ GameObject:
   - component: {fileID: 645866274}
   - component: {fileID: 645866273}
   - component: {fileID: 645866272}
+  - component: {fileID: 645866275}
   m_Layer: 0
-  m_Name: More Info Button
+  m_Name: More Info Button (cc)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8013,6 +8056,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 645866270}
   m_CullTransparentMesh: 0
+--- !u!65 &645866275
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 645866270}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 18.65, y: 12.93, z: 33.62}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &645955994
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9398,6 +9454,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: VRPlayer
       objectReference: {fileID: 0}
+    - target: {fileID: 107946, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 447954, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.33
@@ -10381,6 +10441,7 @@ GameObject:
   - component: {fileID: 799749498}
   - component: {fileID: 799749497}
   - component: {fileID: 799749496}
+  - component: {fileID: 799749499}
   m_Layer: 5
   m_Name: Exit button
   m_TagString: Untagged
@@ -10499,6 +10560,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 799749494}
   m_CullTransparentMesh: 0
+--- !u!65 &799749499
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 799749494}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 18.65, y: 12.93, z: 33.62}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &806252376
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10723,8 +10797,9 @@ GameObject:
   - component: {fileID: 811577484}
   - component: {fileID: 811577483}
   - component: {fileID: 811577482}
+  - component: {fileID: 811577485}
   m_Layer: 0
-  m_Name: More Info Button
+  m_Name: More Info Button (cb)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10841,6 +10916,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 811577480}
   m_CullTransparentMesh: 0
+--- !u!65 &811577485
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 811577480}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 18.65, y: 12.93, z: 33.62}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &830288505
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19252,7 +19340,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1584603027
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20640,6 +20728,7 @@ GameObject:
   - component: {fileID: 1706911657}
   - component: {fileID: 1706911656}
   - component: {fileID: 1706911655}
+  - component: {fileID: 1706911658}
   m_Layer: 5
   m_Name: Exit button
   m_TagString: Untagged
@@ -20758,6 +20847,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1706911653}
   m_CullTransparentMesh: 0
+--- !u!65 &1706911658
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1706911653}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 18.65, y: 12.93, z: 33.62}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1713683335 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c4fdf453dda23994bb86482a0f2dc80d,
@@ -21705,6 +21807,7 @@ GameObject:
   - component: {fileID: 1823874138}
   - component: {fileID: 1823874137}
   - component: {fileID: 1823874136}
+  - component: {fileID: 1823874139}
   m_Layer: 5
   m_Name: Exit button
   m_TagString: Untagged
@@ -21823,6 +21926,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1823874134}
   m_CullTransparentMesh: 0
+--- !u!65 &1823874139
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1823874134}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 18.65, y: 12.93, z: 33.62}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1833756464
 GameObject:
   m_ObjectHideFlags: 0
@@ -23503,6 +23619,7 @@ GameObject:
   - component: {fileID: 1998137199}
   - component: {fileID: 1998137198}
   - component: {fileID: 1998137197}
+  - component: {fileID: 1998137200}
   m_Layer: 5
   m_Name: Exit button
   m_TagString: Untagged
@@ -23621,6 +23738,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1998137195}
   m_CullTransparentMesh: 0
+--- !u!65 &1998137200
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1998137195}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 18.65, y: 12.93, z: 33.62}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &2009498991
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24137,6 +24267,7 @@ GameObject:
   - component: {fileID: 2046647238}
   - component: {fileID: 2046647237}
   - component: {fileID: 2046647236}
+  - component: {fileID: 2046647239}
   m_Layer: 5
   m_Name: Exit button
   m_TagString: Untagged
@@ -24255,6 +24386,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2046647234}
   m_CullTransparentMesh: 0
+--- !u!65 &2046647239
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2046647234}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 18.65, y: 12.93, z: 33.62}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2049959333
 GameObject:
   m_ObjectHideFlags: 0
@@ -25118,6 +25262,16 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 5b3ff3d9348e758409629f38d41b8436, type: 2}
+    - target: {fileID: 5168479242841576103, guid: 0835d9686f0a61d44841e73193e52b67,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5168479242841576103, guid: 0835d9686f0a61d44841e73193e52b67,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5257355078985532897, guid: 0835d9686f0a61d44841e73193e52b67,
         type: 3}
       propertyPath: m_text
