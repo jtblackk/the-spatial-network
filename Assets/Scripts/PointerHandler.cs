@@ -174,35 +174,27 @@ public class PointerHandler : MonoBehaviour
                 break;
             // task board cases
             case "More Info Button (cc)":
-                Debug.Log("Pressed");
                 GameObject.Find("Info pages").transform.Find("Client Create").GetComponent<MoreInfoVisibility>().toggleInfo();
                 break;
             case "More Info Button (cb)":
-                Debug.Log("Pressed");
                 GameObject.Find("Info pages").transform.Find("Client Bind").GetComponent<MoreInfoVisibility>().toggleInfo();
                 break;
             case "More Info Button (sc)":
-                Debug.Log("Pressed");
                 GameObject.Find("Info pages").transform.Find("Server Create").GetComponent<MoreInfoVisibility>().toggleInfo();
                 break;
             case "More Info Button (sb)":
-                Debug.Log("Pressed");
                 GameObject.Find("Info pages").transform.Find("Server Bind").GetComponent<MoreInfoVisibility>().toggleInfo();
                 break;
             case "More Info Button (sr)":
-                Debug.Log("Pressed");
                 GameObject.Find("Info pages").transform.Find("Server Receive").GetComponent<MoreInfoVisibility>().toggleInfo();
                 break;
             case "More Info Button (cs)":
-                Debug.Log("Pressed");
                 GameObject.Find("Info pages").transform.Find("Client Send").GetComponent<MoreInfoVisibility>().toggleInfo();
                 break;
             case "More Info Button (scl)":
-                Debug.Log("Pressed");
                 GameObject.Find("Info pages").transform.Find("Server Close").GetComponent<MoreInfoVisibility>().toggleInfo();
                 break;
             case "More Info Button (ccl)":
-                Debug.Log("Pressed");
                 GameObject.Find("Info pages").transform.Find("Client Close").GetComponent<MoreInfoVisibility>().toggleInfo();
                 break;
             case "Exit button":

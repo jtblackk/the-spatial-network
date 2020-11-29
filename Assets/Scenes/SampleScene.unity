@@ -6229,7 +6229,7 @@ GameObject:
   - component: {fileID: 520534684}
   m_Layer: 0
   m_Name: More Info Button (cs)
-  m_TagString: Untagged
+  m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7954,7 +7954,7 @@ GameObject:
   - component: {fileID: 645866275}
   m_Layer: 0
   m_Name: More Info Button (cc)
-  m_TagString: Untagged
+  m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10814,7 +10814,7 @@ GameObject:
   - component: {fileID: 811577485}
   m_Layer: 0
   m_Name: More Info Button (cb)
-  m_TagString: Untagged
+  m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13155,7 +13155,7 @@ GameObject:
   - component: {fileID: 1117505618}
   m_Layer: 0
   m_Name: More Info Button (sb)
-  m_TagString: Untagged
+  m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14969,7 +14969,7 @@ GameObject:
   - component: {fileID: 1223000443}
   m_Layer: 0
   m_Name: More Info Button (sc)
-  m_TagString: Untagged
+  m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -22281,7 +22281,7 @@ GameObject:
   - component: {fileID: 1859464157}
   m_Layer: 0
   m_Name: More Info Button (sr)
-  m_TagString: Untagged
+  m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -23234,7 +23234,7 @@ GameObject:
   - component: {fileID: 1971937887}
   m_Layer: 0
   m_Name: More Info Button (ccl)
-  m_TagString: Untagged
+  m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25205,7 +25205,7 @@ GameObject:
   - component: {fileID: 2138807256}
   m_Layer: 0
   m_Name: More Info Button (scl)
-  m_TagString: Untagged
+  m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
