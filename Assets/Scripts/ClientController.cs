@@ -35,7 +35,7 @@ public class ClientController : MonoBehaviour
     bool autoSendToggled;
     bool payloadIndexed;
     
-    List<GameObject> checkmarks;
+    public List<GameObject> checkmarks;
 
     public void Start() {
         this.originalSocketPos = this.activeSocketObject.transform.localPosition;

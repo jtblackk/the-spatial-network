@@ -198,12 +198,36 @@ public class PointerHandler : MonoBehaviour
                 GameObject.Find("Info pages").transform.Find("Client Close").GetComponent<MoreInfoVisibility>().toggleInfo();
                 break;
             case "Exit button":
-            Debug.Log("working!");
                 GameObject info_pages = GameObject.Find("Info pages");
                 foreach(Transform page in info_pages.transform) {
                     if(page.gameObject.activeSelf == true) {
                         page.GetComponent<MoreInfoVisibility>().toggleInfo();
                     }
+                }
+                break;
+            case "Quiz Button": 
+                // check that Checkmark (cc), Checkmark (cs), Checkmark (ccl) are all active
+                ClientController ccontrol = Transform.FindObjectOfType<ClientController>();
+                bool clientComplete = true;
+                foreach(GameObject obj in ccontrol.checkmarks) {
+                    if(obj.name != "Checkmark (cb)" && obj.activeSelf == false) {
+                        clientComplete = false;
+                    }
+                }
+
+                ServerController scontrol = Transform.FindObjectOfType<ServerController>();
+                bool serverComplete = true;
+                foreach(GameObject obj in scontrol.checkmarks) {
+                    if(obj.activeSelf == false) {
+                        clientComplete = false;
+                    }
+                }
+                // check that Checkmark (sc), Checkmark (sb), Checkmark (sr), and Checkmark (scl) are all active
+                if(clientComplete && serverComplete) {
+                    Debug.Log("start quiz here");
+                }
+                else {
+                    Debug.Log("still more steps to complete before starting quiz");
                 }
                 break;
             default:

@@ -30,7 +30,7 @@ public class ServerController : MonoBehaviour
     public bool autoReceiveToggled;
     public bool screenBlanked;
 
-    List<GameObject> checkmarks;
+    public List<GameObject> checkmarks;
 
     public void Start() {
         this.originalSocketPos = this.activeSocketObject.transform.localPosition;
