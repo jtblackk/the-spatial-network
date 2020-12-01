@@ -198,39 +198,55 @@ public class ClientController : MonoBehaviour
             // Debug.Log("CLIENT: \"ERROR: called close without any sockets opened\"");
             yield break;
         }
+        else if(this.activeSocketState == state.Created) {
+            // update appropriate status variables
+            this.activeSocketState = state.Closed;
+            this.activeSocketType = socketType.None;
+            int closedPort = this.activePort;
+            this.activePort = 0;
+            
+            // present feedback
+            ClientInstructions.screen.text = "closed socket";
+        }
+        else if (this.activeSocketState == state.Bound) {
 
-        // update appropriate status variables
-        this.activeSocketState = state.Closed;
-        this.activeSocketType = socketType.None;
-        int closedPort = this.activePort;
-        this.activePort = 0;
+            // update appropriate status variables
+            this.activeSocketState = state.Closed;
+            this.activeSocketType = socketType.None;
+            int closedPort = this.activePort;
+            this.activePort = 0;
+            
+            // present feedback
+            ClientInstructions.screen.text = "closed socket on port " + closedPort;
 
-        // do close transformations
-        // a. retreat socket back into port box
-        while(this.originalSocketPos.x - this.activeSocketObject.transform.localPosition.x > 0) {
-            this.activeSocketObject.transform.Translate(Vector3.right * .001f);
-            yield return null;
+            // do close transformations
+            // a. retreat socket back into port box
+            while(this.originalSocketPos.x - this.activeSocketObject.transform.localPosition.x > 0) {
+                this.activeSocketObject.transform.Translate(Vector3.right * .001f);
+                yield return null;
+            }
+
+            // b. show port cover
+            this.transform.Find("Client Ports").transform.Find("Port Cover " + closedPort).gameObject.SetActive(true);
+
+            // c. move socket back to port 1
+            this.activeSocketObject.transform.Translate(Vector3.forward * (closedPort - 1) * this.spaceBetweenPorts, Space.World);
+            
+            // d. hide socket
+            this.activeSocketObject.transform.Find("UDP Socket").gameObject.SetActive(false);
+            this.activeSocketObject.transform.Find("TCP Socket").gameObject.SetActive(false);
+
         }
 
-        // b. show port cover
-        this.transform.Find("Client Ports").transform.Find("Port Cover " + closedPort).gameObject.SetActive(true);
-
-        // c. move socket back to port 1
-        this.activeSocketObject.transform.Translate(Vector3.forward * (closedPort - 1) * this.spaceBetweenPorts, Space.World);
-        
-        // d. hide socket
-        this.activeSocketObject.transform.Find("UDP Socket").gameObject.SetActive(false);
-        this.activeSocketObject.transform.Find("TCP Socket").gameObject.SetActive(false);
-
-        // present feedback
-        ClientInstructions.screen.text = "closed socket on port " + closedPort;
+        // mark off the checklist
         foreach(GameObject obj in checkmarks) {
             if(obj.name == "Checkmark (ccl)") {
-               obj.SetActive(true);
+            obj.SetActive(true);
             }
         }
 
     }
+
 
 
     // helper: clears the numpad buffer and blocks reading from it
@@ -277,6 +293,10 @@ public class ClientController : MonoBehaviour
     // and creation and travel of the packet object itself.
     public IEnumerator sendData()
     {
+        if(this.activeSocketState != state.Created) {
+            ClientInstructions.screen.text = "ERROR: you need to create a socket object before you can send data.";
+            yield break;
+        }
 
         // retrieve the ip address and port to send data to by using the numpad.
         // TODO: this should only be done once if using auto-send

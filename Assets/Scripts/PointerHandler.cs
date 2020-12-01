@@ -24,6 +24,9 @@ public class PointerHandler : MonoBehaviour
 
     public Vector3 defaultRotation;
 
+    public GameObject taskList;
+
+
     // List<GameObject> moreInfoButtons;
 
     void Awake()
@@ -214,6 +217,9 @@ public class PointerHandler : MonoBehaviour
                         page.GetComponent<MoreInfoVisibility>().toggleInfo();
                     }
                 }
+                break;
+            case "Task List Button":
+                taskList.SetActive(!taskList.activeSelf);
                 break;
             case "Quiz Button":
 
