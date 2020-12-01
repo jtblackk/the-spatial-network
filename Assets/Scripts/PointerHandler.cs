@@ -15,6 +15,15 @@ public class PointerHandler : MonoBehaviour
     public GameObject serverArea;
     public string quizScene;
 
+    public GameObject desktopPlayer;
+    public GameObject vrPlayer;
+    public Vector3 labPositionDesktop;
+    public Vector3 labPositionVR;
+    public Vector3 startPosDesktop;
+    public Vector3 startPosVR;
+
+    public Vector3 defaultRotation;
+
     // List<GameObject> moreInfoButtons;
 
     void Awake()
@@ -22,7 +31,6 @@ public class PointerHandler : MonoBehaviour
         laserPointer.PointerIn += PointerInside;
         laserPointer.PointerOut += PointerOutside;
         laserPointer.PointerClick += PointerClick;
-
     }
 
     private void processInput(String buttonName) {
@@ -235,6 +243,21 @@ public class PointerHandler : MonoBehaviour
                     Debug.Log("still more steps to complete before starting quiz");
                 }
                 break;
+
+            case "StartGame":
+                desktopPlayer.transform.position = labPositionDesktop;
+                vrPlayer.transform.position = labPositionVR;
+                break;
+
+            case "TitleButton":
+                desktopPlayer.transform.position = startPosDesktop;
+                vrPlayer.transform.position = startPosVR;
+                break;
+
+            case "QuitButton":
+                Application.Quit();
+                break;
+
             default:
                 break;
         }

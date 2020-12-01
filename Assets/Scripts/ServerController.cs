@@ -11,7 +11,7 @@ public class ServerController : MonoBehaviour
     public enum socketType {None, TCP, UDP};
     private socketType activeSocketType;
 
-    private int activePort;
+    public int activePort;
     private Vector3 originalSocketPos;
     private float spaceBetweenPorts = .505f;
     public GameObject activeSocketObject;
@@ -279,7 +279,7 @@ public class ServerController : MonoBehaviour
         }
         else {
             ServerInstructions.screen.text += dataReceived[tail-1];
-            //dataReceived.Remove(dataReceived[tail-1]);
+            dataReceived.Remove(dataReceived[tail-1]);
         }
         
         // Debug.Log("SERVER: \"receiveData stub\"");

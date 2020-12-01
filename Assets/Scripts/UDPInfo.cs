@@ -82,7 +82,7 @@ public class UDPInfo : MonoBehaviour
 
         destIP = destination;
         srcPort = port;
-        data = payload.ToString();;
+        data = payload.ToString();
 
 
         // srcIPTxt.text = srcIP;

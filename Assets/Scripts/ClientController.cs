@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random=UnityEngine.Random;
 using TMPro;
+using System.Linq;
 using UnityEngine.UIElements;
 
 public class ClientController : MonoBehaviour
@@ -14,7 +15,9 @@ public class ClientController : MonoBehaviour
 
     private ServerController server;
 
-    private  int activePort;
+    private int activePort;
+    private int sourcePort;
+    private string destPort;
     private Vector3 originalSocketPos;
     private float spaceBetweenPorts = .505f;
     public GameObject activeSocketObject;
@@ -142,6 +145,7 @@ public class ClientController : MonoBehaviour
 
         // bind the socket, update appropriate values
         this.activePort = Int32.Parse(numpadInput);
+        this.sourcePort = Int32.Parse(numpadInput);
         this.activeSocketState = state.Bound;
 
         // make socket tube protrude
@@ -303,7 +307,7 @@ public class ClientController : MonoBehaviour
             
             numpadInput = this.clearNumpadBuffer();
         } while(Int32.Parse(numpadInput) < 1 || Int32.Parse(numpadInput) > 4);
-        string destPort = numpadInput;
+        destPort = numpadInput;
 
         // bind the client socket to a random port if the user did not bind it
         if(activeSocketState != state.Bound) {
@@ -328,7 +332,10 @@ public class ClientController : MonoBehaviour
         p = Instantiate(this.packet, start, Quaternion.identity);
         p.GetComponent<UDPInfo>().payload = (char)('A' + Random.Range (0,26));
         p.GetComponent<UDPInfo>().port = activePort;
+        p.GetComponent<UDPInfo>().srcPort = sourcePort;
+        p.GetComponent<UDPInfo>().length = 1;
         p.GetComponent<UDPInfo>().destination = "192.168.0.2";
+        p.GetComponent<UDPInfo>().srcIP = "192.168.0.1";
         //p.name = "tcp_model";
         //p = GameObject.Find("tcp_model");
 
@@ -359,18 +366,20 @@ public class ClientController : MonoBehaviour
 
             if (this.activePort == 0) p.GetComponent<Rigidbody>().useGravity = true;
             p.transform.position = Vector3.MoveTowards(p.transform.position, target, Time.deltaTime * speed);
-            if (p.GetComponent<PacketCollider>().received) {
+            if (p.GetComponent<PacketCollider>().received && server.activePort == int.Parse(this.destPort)) {
                 // TODO: lots of conditionals to check each frame,
                 // definitely a better way to insert once while collisions occur,
                 // likely from the PacketCollider script.
                 if (tail.Equals(0)) {
                     Debug.Log("Adding payload to server");
                     server.dataReceived.Add(payload);
+                    Destroy(p);
                 }
                 else {
                     if (server.dataReceived[tail-1] != payload) {
                         Debug.Log("Adding payload to server");
                         server.dataReceived.Add(payload);
+                        Destroy(p);
                     }
                 }
             }
