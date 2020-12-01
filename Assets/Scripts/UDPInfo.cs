@@ -46,7 +46,7 @@ public class UDPInfo : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         // panel = this.transform.GetChild(6).gameObject;
         // payloadText = panel.transform.GetChild(0).GetComponent<TextMeshPro>();
