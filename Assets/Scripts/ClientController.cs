@@ -351,11 +351,15 @@ public class ClientController : MonoBehaviour
 
         p = Instantiate(this.packet, start, Quaternion.identity);
         p.GetComponent<UDPInfo>().payload = (char)('A' + Random.Range (0,26));
+        p.GetComponent<UDPInfo>().data = "" + p.GetComponent<UDPInfo>().payload;
         p.GetComponent<UDPInfo>().port = activePort;
+        p.GetComponent<UDPInfo>().destPort = activePort;
         p.GetComponent<UDPInfo>().srcPort = sourcePort;
         p.GetComponent<UDPInfo>().length = 1;
         p.GetComponent<UDPInfo>().destination = "192.168.0.2";
+        p.GetComponent<UDPInfo>().destIP = "192.168.0.2";
         p.GetComponent<UDPInfo>().srcIP = "192.168.0.1";
+        p.GetComponent<UDPInfo>().showPanel();
         //p.name = "tcp_model";
         //p = GameObject.Find("tcp_model");
 
