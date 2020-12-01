@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Valve.VR.Extras;
 
@@ -12,6 +13,7 @@ public class PointerHandler : MonoBehaviour
 
     public GameObject clientArea;
     public GameObject serverArea;
+    public string quizScene;
 
     // List<GameObject> moreInfoButtons;
 
@@ -205,7 +207,8 @@ public class PointerHandler : MonoBehaviour
                     }
                 }
                 break;
-            case "Quiz Button": 
+            case "Quiz Button":
+
                 // check that Checkmark (cc), Checkmark (cs), Checkmark (ccl) are all active
                 ClientController ccontrol = Transform.FindObjectOfType<ClientController>();
                 bool clientComplete = true;
@@ -225,6 +228,8 @@ public class PointerHandler : MonoBehaviour
                 // check that Checkmark (sc), Checkmark (sb), Checkmark (sr), and Checkmark (scl) are all active
                 if(clientComplete && serverComplete) {
                     Debug.Log("start quiz here");
+                    SceneManager.LoadScene(quizScene, LoadSceneMode.Single);
+
                 }
                 else {
                     Debug.Log("still more steps to complete before starting quiz");
