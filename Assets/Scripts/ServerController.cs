@@ -166,32 +166,48 @@ public class ServerController : MonoBehaviour
             ServerInstructions.screen.text = "ERROR: called close without any sockets opened";
             yield break;
         }
+        else if (this.activeSocketState == state.Created) {
+             // update appropriate status variables
+            this.activeSocketState = state.Closed;
+            this.activeSocketType = socketType.None;
+            int closedPort = this.activePort;
+            this.activePort = 0;
+            
+            // present feedback
+            ServerInstructions.screen.text = "closed socket";
 
-        // update appropriate status variables
-        this.activeSocketState = state.Closed;
-        this.activeSocketType = socketType.None;
-        int closedPort = this.activePort;
-        this.activePort = 0;
+        }
+        else if (this.activeSocketState == state.Bound) {
+            
+            // update appropriate status variables
+            this.activeSocketState = state.Closed;
+            this.activeSocketType = socketType.None;
+            int closedPort = this.activePort;
+            this.activePort = 0;
+            
+            // present feedback
+            ServerInstructions.screen.text = "closed socket on port " + closedPort;
 
-        // do close transformations
-        // a. retreat socket back into port box
-        while(this.originalSocketPos.x - this.activeSocketObject.transform.localPosition.x < 0) {
-            this.activeSocketObject.transform.Translate(Vector3.left * .001f);
-            yield return null;
+            // do close transformations
+            // a. retreat socket back into port box
+            while(this.originalSocketPos.x - this.activeSocketObject.transform.localPosition.x < 0) {
+                this.activeSocketObject.transform.Translate(Vector3.left * .001f);
+                yield return null;
+            }
+
+            // b. show port cover
+            this.transform.Find("Server Ports").transform.Find("Port Cover " + closedPort).gameObject.SetActive(true);
+            
+            // c. move socket back to port 1
+            this.activeSocketObject.transform.Translate(Vector3.forward * (closedPort - 1) * this.spaceBetweenPorts, Space.World);
+            
+            // d. hide socket
+            this.activeSocketObject.transform.Find("UDP Socket").gameObject.SetActive(false);
+            this.activeSocketObject.transform.Find("TCP Socket").gameObject.SetActive(false);
+
+
         }
 
-        // b. show port cover
-        this.transform.Find("Server Ports").transform.Find("Port Cover " + closedPort).gameObject.SetActive(true);
-        
-        // c. move socket back to port 1
-        this.activeSocketObject.transform.Translate(Vector3.forward * (closedPort - 1) * this.spaceBetweenPorts, Space.World);
-        
-        // d. hide socket
-        this.activeSocketObject.transform.Find("UDP Socket").gameObject.SetActive(false);
-        this.activeSocketObject.transform.Find("TCP Socket").gameObject.SetActive(false);
-
-        // present feedback
-        ServerInstructions.screen.text = "closed socket on port " + closedPort;
         foreach(GameObject obj in checkmarks) {
             if(obj.name == "Checkmark (scl)") {
                obj.SetActive(true);
@@ -267,6 +283,11 @@ public class ServerController : MonoBehaviour
 
     public void receiveData()
     {
+        if(this.activeSocketState != state.Bound) {
+            ServerInstructions.screen.text = "ERROR: you need to bind a socket before you can receive data";
+            return;
+        }
+        
         int tail = dataReceived.Count;
 
         if (ServerInstructions.screen.text != "" && !screenBlanked) {
