@@ -24,6 +24,9 @@ public class PointerHandler : MonoBehaviour
 
     public Vector3 defaultRotation;
 
+    public GameObject taskList;
+
+
     // List<GameObject> moreInfoButtons;
 
     void Awake()
@@ -215,6 +218,9 @@ public class PointerHandler : MonoBehaviour
                     }
                 }
                 break;
+            case "Task List Button":
+                taskList.SetActive(!taskList.activeSelf);
+                break;
             case "Quiz Button":
 
                 // check that Checkmark (cc), Checkmark (cs), Checkmark (ccl) are all active
@@ -256,6 +262,23 @@ public class PointerHandler : MonoBehaviour
 
             case "QuitButton":
                 Application.Quit();
+                break;
+
+            // Quiz Scene buttons
+            case "A":
+                GameObject.Find("QuizHandler").GetComponent<Quiz>().A_choices();
+                break;
+            case "B":
+                GameObject.Find("QuizHandler").GetComponent<Quiz>().B_choices();
+                break;
+            case "C":
+                GameObject.Find("QuizHandler").GetComponent<Quiz>().C_choices();
+                break;
+            case "D":
+                GameObject.Find("QuizHandler").GetComponent<Quiz>().D_choices();
+                break;
+            case "GoToLab":
+                SceneManager.LoadScene(quizScene, LoadSceneMode.Single);
                 break;
 
             default:
