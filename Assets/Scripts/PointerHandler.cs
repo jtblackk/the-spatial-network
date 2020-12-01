@@ -222,7 +222,6 @@ public class PointerHandler : MonoBehaviour
                 taskList.SetActive(!taskList.activeSelf);
                 break;
             case "Quiz Button":
-
                 // check that Checkmark (cc), Checkmark (cs), Checkmark (ccl) are all active
                 ClientController ccontrol = Transform.FindObjectOfType<ClientController>();
                 bool clientComplete = true;
@@ -278,7 +277,7 @@ public class PointerHandler : MonoBehaviour
                 GameObject.Find("QuizHandler").GetComponent<Quiz>().D_choices();
                 break;
             case "GoToLab":
-                SceneManager.LoadScene(quizScene, LoadSceneMode.Single);
+                GameObject.Find("QuizHandler").GetComponent<Quiz>().goToLab();
                 break;
 
             default:

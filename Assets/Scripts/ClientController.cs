@@ -31,7 +31,7 @@ public class ClientController : MonoBehaviour
 
     public GameObject packet;
     private Vector3 start, target;
-    private float speed = 0.5f;
+    private float speed = 0.8f;
     private int input;
     private GameObject p;
 
@@ -293,7 +293,7 @@ public class ClientController : MonoBehaviour
     // and creation and travel of the packet object itself.
     public IEnumerator sendData()
     {
-        if(this.activeSocketState != state.Created) {
+        if(this.activeSocketState != state.Created && this.activeSocketState != state.Bound) {
             ClientInstructions.screen.text = "ERROR: you need to create a socket object before you can send data.";
             yield break;
         }
