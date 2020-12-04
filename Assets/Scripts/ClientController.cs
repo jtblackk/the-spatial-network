@@ -22,7 +22,7 @@ public class ClientController : MonoBehaviour
     private float spaceBetweenPorts = .505f;
     public GameObject activeSocketObject;
 
-    public enum state {Closed, Created, Bound, Transmitting};
+    public enum state {Closed, Created, Binding, Bound, Transmitting, Transmitted};
     public state activeSocketState;
 
     public string numpadBuffer;
@@ -128,20 +128,27 @@ public class ClientController : MonoBehaviour
             yield break;
         }
 
+        this.activeSocketState = state.Binding;
+
+        
         // ask user to select a port to bind to
         string numpadInput;
         do {
-            ClientInstructions.screen.text = "enter a port to bind to\n(1-4 on keypad)\n\npress enter when finished";
-            
             this.clearNumpadBuffer();
 
             // wait for the numpad buffer to be ready to read
+            
             while(this.bufferReadyToRead != true) {
+                ClientInstructions.screen.text = "enter a port to bind to\n(1-4 on keypad)\n\npress enter when finished";
                 yield return null;
             }
             
             numpadInput = this.clearNumpadBuffer();
         } while(Int32.Parse(numpadInput) < 1 || Int32.Parse(numpadInput) > 4);
+
+        if(this.activeSocketState != state.Binding) {
+            yield break;
+        }
 
         // bind the socket, update appropriate values
         this.activePort = Int32.Parse(numpadInput);
@@ -241,7 +248,7 @@ public class ClientController : MonoBehaviour
         // mark off the checklist
         foreach(GameObject obj in checkmarks) {
             if(obj.name == "Checkmark (ccl)") {
-            obj.SetActive(true);
+                obj.SetActive(true);
             }
         }
 
@@ -298,16 +305,19 @@ public class ClientController : MonoBehaviour
             yield break;
         }
 
+        state prev_socket_state = this.activeSocketState;
+        this.activeSocketState = state.Transmitting;
+
         // retrieve the ip address and port to send data to by using the numpad.
         // TODO: this should only be done once if using auto-send
         string numpadInput;
         do {
-            ClientInstructions.screen.text = "enter the ip address of the module to send data to by using the keypad\n\n press enter when finished";
             
             this.clearNumpadBuffer();
 
             // wait for the numpad buffer to be ready to read
             while(this.bufferReadyToRead != true) {
+                ClientInstructions.screen.text = "enter the ip address of the module to send data to by using the keypad\n\n press enter when finished";
                 yield return null;
             }
             
@@ -316,18 +326,25 @@ public class ClientController : MonoBehaviour
         string destIP = numpadInput;
 
         do {
-            ClientInstructions.screen.text = "enter a port to send the data to (1-4 on keypad)\n\npress enter when finished";;
             
             this.clearNumpadBuffer();
 
             // wait for the numpad buffer to be ready to read
             while(this.bufferReadyToRead != true) {
+                ClientInstructions.screen.text = "enter a port to send the data to (1-4 on keypad)\n\npress enter when finished";;
                 yield return null;
             }
             
             numpadInput = this.clearNumpadBuffer();
         } while(Int32.Parse(numpadInput) < 1 || Int32.Parse(numpadInput) > 4);
         destPort = numpadInput;
+        
+        if(this.activeSocketState != state.Transmitting) {
+            yield break;
+        }
+        else {
+            this.activeSocketState = prev_socket_state;
+        }
 
         // bind the client socket to a random port if the user did not bind it
         if(activeSocketState != state.Bound) {

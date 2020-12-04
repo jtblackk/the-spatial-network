@@ -16,7 +16,7 @@ public class ServerController : MonoBehaviour
     private float spaceBetweenPorts = .505f;
     public GameObject activeSocketObject;
 
-    public enum state {Closed, Created, Bound, Transmitting};
+    public enum state {Closed, Created, Binding, Bound, Transmitting, Transmitted};
     public state activeSocketState;
 
     public string numpadBuffer;
@@ -116,10 +116,11 @@ public class ServerController : MonoBehaviour
             yield break;
         }
 
+        this.activeSocketState = state.Binding;
+
         // ask user to select a port to bind to
         string numpadInput;
         do {
-            ServerInstructions.screen.text = "enter a port to bind to\n(1-4 on keypad)\n\npress enter when finished";
             // Debug.Log("SERVER: \"Enter a port to bind to (1-4)\"");
 
             
@@ -127,11 +128,16 @@ public class ServerController : MonoBehaviour
 
             // wait for the numpad buffer to be ready to read
             while(this.bufferReadyToRead != true) {
+                ServerInstructions.screen.text = "enter a port to bind to\n(1-4 on keypad)\n\npress enter when finished";
                 yield return null;
             }
             
             numpadInput = this.clearNumpadBuffer();
         } while(Int32.Parse(numpadInput) < 1 || Int32.Parse(numpadInput) > 4);
+
+        if(this.activeSocketState != state.Binding) {
+            yield break;
+        }
 
         // bind the socket, update appropriate values
         this.activePort = Int32.Parse(numpadInput);
